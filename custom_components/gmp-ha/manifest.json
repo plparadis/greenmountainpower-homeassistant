@@ -1,0 +1,10 @@
+{
+  "domain": "gmp-ha",
+  "name": "Green Mountain Power Home Assistant",
+  "documentation": "https://github.com/plparadis/greenmountainpower-homeassistant",
+  "issue_tracker": "https://github.com/plparadis/greenmountainpower-homeassistant/issues",
+  "dependencies": [],
+  "config_flow": true,
+  "codeowners": ["@plparadis"],
+  "requirements": []
+}
