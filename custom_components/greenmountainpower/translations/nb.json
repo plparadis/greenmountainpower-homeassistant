@@ -1,0 +1,49 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Green Mountain Power",
+        "description": "Oppgi Green Mountain Power-innlogging og pris.",
+        "data": {
+          "account_number": "Kontonummer",
+          "username": "Brukernavn",
+          "password": "Passord",
+          "price_per_kwh": "Pris per kWh (USD)",
+          "backfill_days": "Antall dager med historikk"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Feil brukernavn eller passord.",
+      "cannot_connect": "Kan ikke koble til Green Mountain Power.",
+      "unknown": "Uventet feil"
+    },
+    "abort": {
+      "single_instance_allowed": "Kun én instans er tillatt."
+    }
+  },
+  "options": {
+    "step": {
+      "user": {
+        "title": "Alternativer for Green Mountain Power",
+        "data": {
+          "price_per_kwh": "Pris per kWh (USD)",
+          "backfill_days": "Antall dager med historikk"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "grid_energy": {
+        "name": "Nettenergi"
+      },
+      "daily_energy": {
+        "name": "Daglig energi"
+      },
+      "estimated_bill": {
+        "name": "Anslått regning"
+      }
+    }
+  }
+}
