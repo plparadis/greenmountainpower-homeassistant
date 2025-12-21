@@ -19,11 +19,9 @@ please look at the [User Guide in the Cookiecutter documentation](https://cookie
 
 **This component will set up the following platforms.**
 
-| Platform        | Description                                                               |
-| --------------- | ------------------------------------------------------------------------- |
-| `binary_sensor` | Show something `True` or `False`.                                         |
-| `sensor`        | Show info from Green Mountain Power Home Assistant API. |
-| `switch`        | Switch something `True` or `False`.                                       |
+| Platform | Description |
+| --- | --- |
+| `sensor` | Energy usage and bill estimates from Green Mountain Power. |
 
 ![example][exampleimg]
 
@@ -31,8 +29,8 @@ please look at the [User Guide in the Cookiecutter documentation](https://cookie
 
 1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` directory (folder) there, you need to create it.
-3. In the `custom_components` directory (folder) create a new folder called `gmp-ha`.
-4. Download _all_ the files from the `custom_components/gmp-ha/` directory (folder) in this repository.
+3. In the `custom_components` directory (folder) create a new folder called `greenmountainpower`.
+4. Download _all_ the files from the `custom_components/greenmountainpower/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
 6. Restart Home Assistant
 7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Green Mountain Power Home Assistant"
@@ -40,21 +38,15 @@ please look at the [User Guide in the Cookiecutter documentation](https://cookie
 Using your HA configuration directory (folder) as a starting point you should now also have this:
 
 ```text
-custom_components/gmp-ha/translations/en.json
-custom_components/gmp-ha/translations/fr.json
-custom_components/gmp-ha/translations/nb.json
-custom_components/gmp-ha/translations/sensor.en.json
-custom_components/gmp-ha/translations/sensor.fr.json
-custom_components/gmp-ha/translations/sensor.nb.json
-custom_components/gmp-ha/translations/sensor.nb.json
-custom_components/gmp-ha/__init__.py
-custom_components/gmp-ha/api.py
-custom_components/gmp-ha/binary_sensor.py
-custom_components/gmp-ha/config_flow.py
-custom_components/gmp-ha/const.py
-custom_components/gmp-ha/manifest.json
-custom_components/gmp-ha/sensor.py
-custom_components/gmp-ha/switch.py
+custom_components/greenmountainpower/translations/en.json
+custom_components/greenmountainpower/translations/fr.json
+custom_components/greenmountainpower/translations/nb.json
+custom_components/greenmountainpower/__init__.py
+custom_components/greenmountainpower/api.py
+custom_components/greenmountainpower/config_flow.py
+custom_components/greenmountainpower/const.py
+custom_components/greenmountainpower/manifest.json
+custom_components/greenmountainpower/sensor.py
 ```
 
 ## Configuration is done in the UI

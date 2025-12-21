@@ -1,0 +1,49 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Green Mountain Power",
+        "description": "Enter your Green Mountain Power credentials and pricing.",
+        "data": {
+          "account_number": "Account number",
+          "username": "Username",
+          "password": "Password",
+          "price_per_kwh": "Price per kWh (USD)",
+          "backfill_days": "Backfill days"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Username or password is incorrect.",
+      "cannot_connect": "Unable to connect to Green Mountain Power.",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "single_instance_allowed": "Only a single instance is allowed."
+    }
+  },
+  "options": {
+    "step": {
+      "user": {
+        "title": "Green Mountain Power options",
+        "data": {
+          "price_per_kwh": "Price per kWh (USD)",
+          "backfill_days": "Backfill days"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "grid_energy": {
+        "name": "Grid energy"
+      },
+      "daily_energy": {
+        "name": "Daily energy"
+      },
+      "estimated_bill": {
+        "name": "Estimated bill"
+      }
+    }
+  }
+}
