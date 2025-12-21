@@ -1,8 +1,8 @@
 {
   "domain": "greenmountainpower",
   "name": "Green Mountain Power",
-  "config_flow": true,
   "codeowners": ["@plparadis"],
+  "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/plparadis/greenmountainpower-homeassistant",
   "iot_class": "cloud_polling",
