@@ -1,5 +1,4 @@
 """Integration setup for Green Mountain Power."""
-
 from __future__ import annotations
 
 import logging

@@ -1,5 +1,4 @@
 """Config flow for the Green Mountain Power integration."""
-
 from __future__ import annotations
 
 from datetime import timedelta
