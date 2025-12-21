@@ -29,14 +29,17 @@ please look at the [User Guide in the Cookiecutter documentation](https://cookie
 
 ### HACS (recommended)
 
-The integration can be installed directly from [HACS][hacs]. Add this repository as a custom integration repository, install, and then configure from the Home Assistant UI.
+The integration can be installed directly from [HACS][hacs]. Use the quick links below or follow the manual steps.
 
-[![Add via HACS](https://my.home-assistant.io/badges/hacs_repository.svg)][hacs-repository]
+**One-click setup**
+
+[![Add repository to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)][hacs-repository]
+[![Start integration setup](https://my.home-assistant.io/badges/config_flow_start.svg)][integration-start]
 
 1. In Home Assistant, open **HACS → Integrations → Custom repositories** and add this repository URL as the source. Select **Integration** as the category.
 2. Return to **HACS → Integrations**, search for **Green Mountain Power Home Assistant**, and click **Download**.
 3. Restart Home Assistant.
-4. Open **Settings → Devices & Services → Add Integration**, search for **Green Mountain Power Home Assistant**, and follow the prompts.
+4. Open **Settings → Devices & Services → Add Integration**, search for **Green Mountain Power Home Assistant**, and follow the prompts (or use the button above to jump directly to the setup dialog).
 
 ### Manual installation
 
@@ -99,3 +102,4 @@ Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [in
 [releases-shield]: https://img.shields.io/github/release/plparadis/greenmountainpower-homeassistant.svg?style=for-the-badge
 [releases]: https://github.com/plparadis/greenmountainpower-homeassistant/releases
 [user_profile]: https://github.com/plparadis
+[integration-start]: https://my.home-assistant.io/redirect/config_flow_start?domain=greenmountainpower
