@@ -1,12 +1,12 @@
 {
   "domain": "greenmountainpower",
   "name": "Green Mountain Power",
-  "documentation": "https://github.com/plparadis/greenmountainpower-homeassistant",
-  "issue_tracker": "https://github.com/plparadis/greenmountainpower-homeassistant/issues",
-  "dependencies": [],
   "config_flow": true,
   "codeowners": ["@plparadis"],
+  "dependencies": [],
+  "documentation": "https://github.com/plparadis/greenmountainpower-homeassistant",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/plparadis/greenmountainpower-homeassistant/issues",
   "requirements": ["greenmountainpower==0.0.6"],
-  "version": "0.1.0",
-  "iot_class": "cloud_polling"
+  "version": "0.1.0"
 }
