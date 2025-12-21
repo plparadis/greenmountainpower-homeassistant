@@ -1,38 +1,31 @@
 """Integration setup for Green Mountain Power."""
 from __future__ import annotations
 
-from datetime import timedelta
 import logging
+from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.exceptions import ConfigEntryAuthFailed
+from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import UpdateFailed
 from homeassistant.util import dt as dt_util
 
+from .api import GmpClient
+from .const import CONF_ACCOUNT_NUMBER
+from .const import CONF_BACKFILL_DAYS
+from .const import CONF_PASSWORD
+from .const import CONF_PRICE_PER_KWH
+from .const import CONF_USERNAME
+from .const import DEFAULT_BACKFILL_DAYS
+from .const import DEFAULT_PRICE_PER_KWH
+from .const import DOMAIN
+from .const import PLATFORMS
+from .const import SCAN_INTERVAL
 from greenmountainpower import exceptions as gmp_exceptions
 
-from .api import GmpClient
-from .const import (
-    CONF_ACCOUNT_NUMBER,
-    CONF_BACKFILL_DAYS,
-    CONF_PASSWORD,
-    CONF_PRICE_PER_KWH,
-    CONF_USERNAME,
-    DEFAULT_BACKFILL_DAYS,
-    DEFAULT_PRICE_PER_KWH,
-    DOMAIN,
-    PLATFORMS,
-    SCAN_INTERVAL,
-)
-
 _LOGGER = logging.getLogger(__name__)
-
-
-async def async_setup(hass: HomeAssistant, config: dict):
-    """Set up the Green Mountain Power integration."""
-
-    return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
