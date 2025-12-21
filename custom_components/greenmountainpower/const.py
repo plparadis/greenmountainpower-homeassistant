@@ -1,5 +1,7 @@
 """Constants for Green Mountain Power Home Assistant."""
 
+from __future__ import annotations
+
 from datetime import timedelta
 
 # Base component constants

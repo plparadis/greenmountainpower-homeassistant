@@ -11,9 +11,9 @@
 
 **This component will set up the following platform.**
 
-| Platform  | Description                |
-| --------- | -------------------------- |
-| `sensor`  | Usage, cost, and bill data |
+| Platform | Description                |
+| -------- | -------------------------- |
+| `sensor` | Usage, cost, and bill data |
 
 ![example][exampleimg]
 
