@@ -9,13 +9,11 @@
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
-**This component will set up the following platforms.**
+**This component will set up the following platform.**
 
-| Platform        | Description                         |
-| --------------- | ----------------------------------- |
-| `binary_sensor` | Show something `True` or `False`.   |
-| `sensor`        | Show info from API.                 |
-| `switch`        | Switch something `True` or `False`. |
+| Platform  | Description                |
+| --------- | -------------------------- |
+| `sensor`  | Usage, cost, and bill data |
 
 ![example][exampleimg]
 
