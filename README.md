@@ -72,6 +72,10 @@ custom_components/greenmountainpower/sensor.py
 
 If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
 
+### Support the project (optional)
+
+The "Buy Me a Coffee" badge above is simply a tip jar for the maintainer. Using this integration does **not** require creating a Buy Me a Coffee account or donating—it's entirely optional and separate from installation.
+
 ## Credits
 
 This project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template.
