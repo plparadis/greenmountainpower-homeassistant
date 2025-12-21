@@ -6,9 +6,11 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
+
+from greenmountainpower import exceptions as gmp_exceptions
 
 from .api import GmpClient
 from .const import (
@@ -96,7 +98,7 @@ class GreenMountainPowerCoordinator(DataUpdateCoordinator):
     ) -> None:
         self.client = client
         self.price_per_kwh = price_per_kwh
-        self.backfill_days = backfill_days
+        self._start_time = dt_util.utcnow() - timedelta(days=backfill_days)
 
         super().__init__(
             hass,
@@ -108,13 +110,14 @@ class GreenMountainPowerCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Fetch usage data from the API."""
 
-        start = dt_util.utcnow() - timedelta(days=self.backfill_days)
         end = dt_util.utcnow()
 
         try:
             usages = await self.hass.async_add_executor_job(
-                self.client.get_hourly_usage, start, end
+                self.client.get_hourly_usage, self._start_time, end
             )
+        except gmp_exceptions.UnauthorizedException as err:
+            raise ConfigEntryAuthFailed from err
         except Exception as err:  # noqa: BLE001
             raise UpdateFailed(err) from err
 

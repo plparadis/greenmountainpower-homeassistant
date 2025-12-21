@@ -5,6 +5,7 @@ from datetime import timedelta
 
 import voluptuous as vol
 
+from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
@@ -47,6 +48,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             except Exception:  # noqa: BLE001
                 self._errors["base"] = "unknown"
             else:
+                await self.async_set_unique_id(str(user_input[CONF_ACCOUNT_NUMBER]))
+                self._abort_if_unique_id_configured()
                 return self.async_create_entry(
                     title=str(user_input[CONF_ACCOUNT_NUMBER]),
                     data=user_input,
@@ -92,6 +95,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             await self.hass.async_add_executor_job(
                 client.get_hourly_usage, start, end
             )
+        except gmp_exceptions.UnauthorizedException as err:
+            raise InvalidAuth from err
         except Exception as err:  # noqa: BLE001
             raise CannotConnect from err
 
