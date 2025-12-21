@@ -1,6 +1,27 @@
 # Green Mountain Power Home Assistant Integration
 
-A Home Assistant integration that pulls hourly electricity usage and estimated billing information from your Green Mountain Power account. It exposes sensors you can use in dashboards, energy management, or automations.
+<p align="center">
+  <img src="example.png" alt="Green Mountain Power in Home Assistant" width="320" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-41BDF5.svg" alt="HACS"></a>
+  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/releases"><img src="https://img.shields.io/github/v/release/plparadis/greenmountainpower-homeassistant" alt="Release"></a>
+  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/releases/latest"><img src="https://img.shields.io/github/downloads/plparadis/greenmountainpower-homeassistant/latest/total?label=latest%20downloads" alt="Release Downloads"></a>
+  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/releases"><img src="https://img.shields.io/github/downloads/plparadis/greenmountainpower-homeassistant/total?label=total%20downloads" alt="Total Downloads"></a>
+  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/blob/main/LICENSE"><img src="https://img.shields.io/github/license/plparadis/greenmountainpower-homeassistant.svg" alt="License"></a>
+  <br/>
+  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/commits/main"><img src="https://img.shields.io/github/last-commit/plparadis/greenmountainpower-homeassistant" alt="Last Commit"></a>
+  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/stargazers"><img src="https://img.shields.io/github/stars/plparadis/greenmountainpower-homeassistant?style=social" alt="Stars"></a>
+</p>
+
+<p align="center">
+  Hourly electricity usage, costs, and billing insights from your Green Mountain Power account—ready to power Home Assistant dashboards, automations, and the Energy panel.
+</p>
+
+**Quick navigation:** [Installation](#installation) • [Configuration](#configuration) • [Sensors](#sensors) • [Troubleshooting](#troubleshooting) • [Contributing](#contributing)
+
+> **⚠️ Community project** — This integration is not affiliated with or supported by Green Mountain Power. Please open an [issue on GitHub](https://github.com/plparadis/greenmountainpower-homeassistant/issues) if you run into problems.
 
 ## Features
 - **Grid energy total** (kWh) – cumulative usage fetched from your GMP account.
