@@ -2,8 +2,11 @@
   "name": "Green Mountain Power Home Assistant",
   "content_in_root": false,
   "render_readme": true,
-  "domains": ["greenmountainpower"],
-  "country": ["US"],
-  "iot_class": "Cloud Polling",
+  "domains": [
+    "greenmountainpower"
+  ],
+  "country": [
+    "US"
+  ],
   "homeassistant": "2023.7.0"
 }
