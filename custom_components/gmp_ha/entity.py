@@ -1,4 +1,4 @@
-"""Base entity for Green Mountain Power sensors."""
+"""Base entity for GMP HA sensors."""
 from __future__ import annotations
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -7,8 +7,8 @@ from .const import DOMAIN
 from .const import NAME
 
 
-class GreenMountainPowerEntity(CoordinatorEntity):
-    """Representation of a Green Mountain Power entity."""
+class GmpHaEntity(CoordinatorEntity):
+    """Representation of a GMP HA entity."""
 
     _attr_has_entity_name = True
 

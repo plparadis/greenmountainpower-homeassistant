@@ -1,9 +1,10 @@
-"""Config flow for the Green Mountain Power integration."""
+"""Config flow for the GMP HA integration."""
 from __future__ import annotations
 
 from datetime import timedelta
 
 import voluptuous as vol
+from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
@@ -19,11 +20,10 @@ from .const import CONF_USERNAME
 from .const import DEFAULT_BACKFILL_DAYS
 from .const import DEFAULT_PRICE_PER_KWH
 from .const import DOMAIN
-from greenmountainpower import exceptions as gmp_exceptions
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Green Mountain Power."""
+    """Handle a config flow for GMP HA."""
 
     VERSION = 1
 
@@ -106,7 +106,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 
 class OptionsFlow(config_entries.OptionsFlow):
-    """Handle options for Green Mountain Power."""
+    """Handle options for GMP HA."""
 
     def __init__(self, config_entry):
         self.config_entry = config_entry

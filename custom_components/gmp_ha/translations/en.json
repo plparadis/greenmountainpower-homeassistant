@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Green Mountain Power",
+        "title": "GMP HA",
         "description": "Enter your Green Mountain Power credentials and pricing.",
         "data": {
           "account_number": "Account number",
@@ -25,7 +25,7 @@
   "options": {
     "step": {
       "user": {
-        "title": "Green Mountain Power options",
+        "title": "GMP HA options",
         "data": {
           "price_per_kwh": "Price per kWh (USD)",
           "backfill_days": "Backfill days"

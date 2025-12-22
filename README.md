@@ -1,4 +1,4 @@
-# Green Mountain Power Home Assistant Integration
+# GMP HA Home Assistant Integration
 
 <p align="center">
   <img src="logo.png" alt="Green Mountain Power in Home Assistant" width="320" />
@@ -10,12 +10,12 @@
 
 <p align="center">
   <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-41BDF5.svg" alt="HACS"></a>
-  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/releases"><img src="https://img.shields.io/github/v/release/plparadis/greenmountainpower-homeassistant" alt="Release"></a>
-  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/releases/latest"><img src="https://img.shields.io/github/downloads/plparadis/greenmountainpower-homeassistant/latest/total?label=latest%20downloads" alt="Release Downloads"></a>
-  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/blob/main/LICENSE"><img src="https://img.shields.io/github/license/plparadis/greenmountainpower-homeassistant.svg" alt="License"></a>
+  <a href="https://github.com/plparadis/gmp-ha/releases"><img src="https://img.shields.io/github/v/release/plparadis/gmp-ha" alt="Release"></a>
+  <a href="https://github.com/plparadis/gmp-ha/releases/latest"><img src="https://img.shields.io/github/downloads/plparadis/gmp-ha/latest/total?label=latest%20downloads" alt="Release Downloads"></a>
+  <a href="https://github.com/plparadis/gmp-ha/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/plparadis/gmp-ha.svg" alt="License"></a>
   <br/>
-  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/commits/main"><img src="https://img.shields.io/github/last-commit/plparadis/greenmountainpower-homeassistant" alt="Last Commit"></a>
-  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/stargazers"><img src="https://img.shields.io/github/stars/plparadis/greenmountainpower-homeassistant?style=social" alt="Stars"></a>
+  <a href="https://github.com/plparadis/gmp-ha/commits/main"><img src="https://img.shields.io/github/last-commit/plparadis/gmp-ha" alt="Last Commit"></a>
+  <a href="https://github.com/plparadis/gmp-ha/stargazers"><img src="https://img.shields.io/github/stars/plparadis/gmp-ha?style=social" alt="Stars"></a>
   <br/>
 </p>
 
@@ -68,17 +68,17 @@ This integration focuses on **simplicity and reliability**. It does **not** atte
 
 ### Option 1: HACS (recommended)
 
-[![Add to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=plparadis&repository=greenmountainpower-homeassistant&category=integration)
+[![Add to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=plparadis&repository=gmp-ha&category=integration)
 
 1. Click the badge above to open HACS with this repository pre-filled.
 2. Click **Download**.
 3. Restart Home Assistant.
 4. Go to **Settings → Devices & Services → Add Integration**.
-5. Search for **Green Mountain Power Home Assistant** and complete setup.
+5. Search for **GMP HA** and complete setup.
 
 ### Option 2: Manual installation
 
-1. Copy `custom_components/greenmountainpower/` to `<config>/custom_components/greenmountainpower/`.
+1. Copy `custom_components/gmp_ha/` to `<config>/custom_components/gmp_ha/`.
 2. Restart Home Assistant.
 3. Add the integration from the UI: **Settings → Devices & Services → Add Integration**.
 
@@ -98,7 +98,7 @@ You can change optional values later under **Integration Options** without re-en
 
 To jump straight into setup from the README, use the quick link below:
 
-[![Start integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=greenmountainpower)
+[![Start integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=gmp_ha)
 
 ---
 
@@ -106,11 +106,11 @@ To jump straight into setup from the README, use the quick link below:
 
 The integration creates the following sensors:
 
-| Sensor                                       | Description                            |
-| -------------------------------------------- | -------------------------------------- |
-| `sensor.green_mountain_power_grid_energy`    | Total energy drawn from the grid (kWh) |
-| `sensor.green_mountain_power_daily_energy`   | Energy used today (kWh)                |
-| `sensor.green_mountain_power_estimated_bill` | Estimated billing cost (USD)           |
+| Sensor                         | Description                            |
+| ------------------------------ | -------------------------------------- |
+| `sensor.gmp_ha_grid_energy`    | Total energy drawn from the grid (kWh) |
+| `sensor.gmp_ha_daily_energy`   | Energy used today (kWh)                |
+| `sensor.gmp_ha_estimated_bill` | Estimated billing cost (USD)           |
 
 ### Attributes
 
@@ -128,7 +128,7 @@ To use this integration in the **Energy** dashboard:
 
 1. Go to **Settings → Dashboards → Energy**.
 2. Under **Electricity grid consumption**.
-3. Select `sensor.green_mountain_power_grid_energy`.
+3. Select `sensor.gmp_ha_grid_energy`.
 4. Set the unit to **kWh** if prompted.
 
 Daily energy values will automatically populate historical views once data is available.
@@ -152,12 +152,12 @@ Daily energy values will automatically populate historical views once data is av
   ```yaml
   logger:
     logs:
-      custom_components.greenmountainpower: debug
+      custom_components.gmp_ha: debug
   ```
 
 ### Need help?
 
-- Open a [GitHub issue](https://github.com/plparadis/greenmountainpower-homeassistant/issues) with details and logs.
+- Open a [GitHub issue](https://github.com/plparadis/gmp-ha/issues) with details and logs.
 - Visit the [Home Assistant Community forum](https://community.home-assistant.io/).
 
 ---

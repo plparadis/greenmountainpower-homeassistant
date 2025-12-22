@@ -1,4 +1,4 @@
-"""Sensor platform for the Green Mountain Power integration."""
+"""Sensor platform for the GMP HA integration."""
 from __future__ import annotations
 
 from homeassistant.components.sensor import SensorDeviceClass
@@ -11,7 +11,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
-from .entity import GreenMountainPowerEntity
+from .entity import GmpHaEntity
 
 
 async def async_setup_entry(
@@ -19,7 +19,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up Green Mountain Power sensors based on a config entry."""
+    """Set up GMP HA sensors based on a config entry."""
 
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
@@ -32,7 +32,7 @@ async def async_setup_entry(
     )
 
 
-class GmpGridEnergySensor(GreenMountainPowerEntity, SensorEntity):
+class GmpGridEnergySensor(GmpHaEntity, SensorEntity):
     """Total energy used from the grid."""
 
     _attr_translation_key = "grid_energy"
@@ -48,7 +48,7 @@ class GmpGridEnergySensor(GreenMountainPowerEntity, SensorEntity):
         return self.coordinator.data["total_kwh"]
 
 
-class GmpDailyEnergySensor(GreenMountainPowerEntity, SensorEntity):
+class GmpDailyEnergySensor(GmpHaEntity, SensorEntity):
     """Energy used today."""
 
     _attr_translation_key = "daily_energy"
@@ -64,7 +64,7 @@ class GmpDailyEnergySensor(GreenMountainPowerEntity, SensorEntity):
         return self.coordinator.data["today_kwh"]
 
 
-class GmpEstimatedBillSensor(GreenMountainPowerEntity, SensorEntity):
+class GmpEstimatedBillSensor(GmpHaEntity, SensorEntity):
     """Estimated cost for the current period."""
 
     _attr_translation_key = "estimated_bill"

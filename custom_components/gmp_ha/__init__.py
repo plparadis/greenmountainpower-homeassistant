@@ -1,9 +1,10 @@
-"""Integration setup for Green Mountain Power."""
+"""Integration setup for GMP HA."""
 from __future__ import annotations
 
 import logging
 from datetime import timedelta
 
+from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
@@ -21,15 +22,15 @@ from .const import CONF_USERNAME
 from .const import DEFAULT_BACKFILL_DAYS
 from .const import DEFAULT_PRICE_PER_KWH
 from .const import DOMAIN
+from .const import NAME
 from .const import PLATFORMS
 from .const import SCAN_INTERVAL
-from greenmountainpower import exceptions as gmp_exceptions
 
 _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Set up Green Mountain Power from a config entry."""
+    """Set up GMP HA from a config entry."""
 
     hass.data.setdefault(DOMAIN, {})
 
@@ -49,7 +50,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         password=password,
     )
 
-    coordinator = GreenMountainPowerCoordinator(
+    coordinator = GmpHaCoordinator(
         hass,
         client=client,
         price_per_kwh=price_per_kwh,
@@ -78,7 +79,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return unload_ok
 
 
-class GreenMountainPowerCoordinator(DataUpdateCoordinator):
+class GmpHaCoordinator(DataUpdateCoordinator):
     """Coordinator to retrieve usage data from Green Mountain Power."""
 
     def __init__(
@@ -96,7 +97,7 @@ class GreenMountainPowerCoordinator(DataUpdateCoordinator):
         super().__init__(
             hass,
             _LOGGER,
-            name="Green Mountain Power",  # noqa: WPS317
+            name=NAME,  # noqa: WPS317
             update_interval=SCAN_INTERVAL,
         )
 

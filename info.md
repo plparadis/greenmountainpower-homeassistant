@@ -15,14 +15,14 @@
 | -------- | -------------------------- |
 | `sensor` | Usage, cost, and bill data |
 
-![Green Mountain Power Home Assistant logo][logoimg]
+![GMP HA logo][logoimg]
 
 {% if not installed %}
 
 ## Installation
 
 1. Click install.
-1. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Green Mountain Power Home Assistant".
+1. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "GMP HA".
 
 {% endif %}
 
@@ -41,8 +41,8 @@ Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [in
 [integration_blueprint]: https://github.com/custom-components/integration_blueprint
 [buymecoffee]: https://www.buymeacoffee.com/ludeeus
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/plparadis/greenmountainpower-homeassistant.svg?style=for-the-badge
-[commits]: https://github.com/plparadis/greenmountainpower-homeassistant/commits/main
+[commits-shield]: https://img.shields.io/github/commit-activity/y/plparadis/gmp-ha.svg?style=for-the-badge
+[commits]: https://github.com/plparadis/gmp-ha/commits/main
 [hacs]: https://hacs.xyz
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [discord]: https://discord.gg/Qa5fW2R
@@ -50,9 +50,9 @@ Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [in
 [logoimg]: logo.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[license]: https://github.com/plparadis/greenmountainpower-homeassistant/blob/main/LICENSE
-[license-shield]: https://img.shields.io/github/license/plparadis/greenmountainpower-homeassistant.svg?style=for-the-badge
+[license]: https://github.com/plparadis/gmp-ha/blob/main/LICENSE
+[license-shield]: https://img.shields.io/github/license/plparadis/gmp-ha.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-%40plparadis-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/plparadis/greenmountainpower-homeassistant.svg?style=for-the-badge
-[releases]: https://github.com/plparadis/greenmountainpower-homeassistant/releases
+[releases-shield]: https://img.shields.io/github/release/plparadis/gmp-ha.svg?style=for-the-badge
+[releases]: https://github.com/plparadis/gmp-ha/releases
 [user_profile]: https://github.com/plparadis

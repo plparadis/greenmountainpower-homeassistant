@@ -1,8 +1,7 @@
 {
-  "name": "Green Mountain Power Home Assistant",
+  "name": "GMP HA",
   "content_in_root": false,
   "render_readme": true,
-  "domains": ["greenmountainpower"],
   "country": ["US"],
   "homeassistant": "2025.12.4"
 }
