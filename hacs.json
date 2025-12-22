@@ -1,6 +1,3 @@
 {
-  "name": "Green Mountain Power",
-  "content_in_root": false,
-  "country": "US",
-  "homeassistant": "2023.7.0"
+  "name": "Green Mountain Power"
 }
