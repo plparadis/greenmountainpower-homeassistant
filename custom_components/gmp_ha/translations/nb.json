@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Green Mountain Power",
+        "title": "GMP HA",
         "description": "Oppgi Green Mountain Power-innlogging og pris.",
         "data": {
           "account_number": "Kontonummer",
@@ -14,7 +14,7 @@
       }
     },
     "error": {
-      "invalid_auth": "Feil brukernavn eller passord.",
+      "invalid_auth": "Brukernavn eller passord er feil.",
       "cannot_connect": "Kan ikke koble til Green Mountain Power.",
       "unknown": "Uventet feil"
     },
@@ -25,7 +25,7 @@
   "options": {
     "step": {
       "user": {
-        "title": "Alternativer for Green Mountain Power",
+        "title": "GMP HA-alternativer",
         "data": {
           "price_per_kwh": "Pris per kWh (USD)",
           "backfill_days": "Antall dager med historikk"
@@ -36,13 +36,13 @@
   "entity": {
     "sensor": {
       "grid_energy": {
-        "name": "Nettenergi"
+        "name": "Strømnettforbruk"
       },
       "daily_energy": {
-        "name": "Daglig energi"
+        "name": "Daglig forbruk"
       },
       "estimated_bill": {
-        "name": "Anslått regning"
+        "name": "Anslått faktura"
       }
     }
   }

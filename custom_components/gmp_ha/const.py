@@ -1,14 +1,14 @@
-"""Constants for Green Mountain Power Home Assistant."""
+"""Constants for the GMP HA integration."""
 from __future__ import annotations
 
 from datetime import timedelta
 
 # Base component constants
-NAME = "Green Mountain Power"
-DOMAIN = "greenmountainpower"
+NAME = "GMP HA"
+DOMAIN = "gmp_ha"
 VERSION = "0.1.0"
 
-ISSUE_URL = "https://github.com/plparadis/greenmountainpower-homeassistant/issues"
+ISSUE_URL = "https://github.com/plparadis/gmp-ha/issues"
 
 # Platforms
 SENSOR = "sensor"

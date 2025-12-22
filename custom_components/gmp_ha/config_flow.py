@@ -1,4 +1,4 @@
-"""Config flow for the Green Mountain Power integration."""
+"""Config flow for the GMP HA integration."""
 from __future__ import annotations
 
 from datetime import timedelta
@@ -23,7 +23,7 @@ from greenmountainpower import exceptions as gmp_exceptions
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Green Mountain Power."""
+    """Handle a config flow for GMP HA."""
 
     VERSION = 1
 
@@ -106,7 +106,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 
 class OptionsFlow(config_entries.OptionsFlow):
-    """Handle options for Green Mountain Power."""
+    """Handle options for GMP HA."""
 
     def __init__(self, config_entry):
         self.config_entry = config_entry
