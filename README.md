@@ -5,92 +5,153 @@
 </p>
 
 <p align="center">
+  Hourly electricity usage, costs, and billing insights from your Green Mountain Power account — ready for Home Assistant dashboards, automations, and the Energy panel.
+</p>
+
+<p align="center">
   <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-41BDF5.svg" alt="HACS"></a>
   <a href="https://github.com/plparadis/greenmountainpower-homeassistant/releases"><img src="https://img.shields.io/github/v/release/plparadis/greenmountainpower-homeassistant" alt="Release"></a>
   <a href="https://github.com/plparadis/greenmountainpower-homeassistant/releases/latest"><img src="https://img.shields.io/github/downloads/plparadis/greenmountainpower-homeassistant/latest/total?label=latest%20downloads" alt="Release Downloads"></a>
-  <a href="https://github.com/plparadis/greenmountainpower-homeassistant/releases"><img src="https://img.shields.io/github/downloads/plparadis/greenmountainpower-homeassistant/total?label=total%20downloads" alt="Total Downloads"></a>
   <a href="https://github.com/plparadis/greenmountainpower-homeassistant/blob/main/LICENSE"><img src="https://img.shields.io/github/license/plparadis/greenmountainpower-homeassistant.svg" alt="License"></a>
   <br/>
   <a href="https://github.com/plparadis/greenmountainpower-homeassistant/commits/main"><img src="https://img.shields.io/github/last-commit/plparadis/greenmountainpower-homeassistant" alt="Last Commit"></a>
   <a href="https://github.com/plparadis/greenmountainpower-homeassistant/stargazers"><img src="https://img.shields.io/github/stars/plparadis/greenmountainpower-homeassistant?style=social" alt="Stars"></a>
 </p>
 
-<p align="center">
-  Hourly electricity usage, costs, and billing insights from your Green Mountain Power account—ready to power Home Assistant dashboards, automations, and the Energy panel.
-</p>
+---
 
-**Quick navigation:** [Installation](#installation) • [Configuration](#configuration) • [Sensors](#sensors) • [Troubleshooting](#troubleshooting) • [Contributing](#contributing)
+> ⚠️ **Community project**
+>
+> This integration is **not affiliated with, endorsed by, or supported by Green Mountain Power**.
+>
+> Do **not** contact GMP customer support for issues related to this integration.
+> Please open an issue on GitHub instead.
 
-> **⚠️ Community project** — This integration is not affiliated with or supported by Green Mountain Power. Please open an [issue on GitHub](https://github.com/plparadis/greenmountainpower-homeassistant/issues) if you run into problems.
+---
+
+## What is this integration?
+
+This Home Assistant integration connects to your **Green Mountain Power online account** and retrieves your electricity usage data.
+
+It allows you to:
+- Track your **energy consumption** directly in Home Assistant
+- Estimate your **electricity costs**
+- Feed data into the **Home Assistant Energy dashboard**
+- Build automations based on real usage data
+
+This integration focuses on **simplicity and reliability**.
+It does **not** attempt to predict peaks or perform demand response.
+
+---
 
 ## Features
 
-- **Grid energy total** (kWh) – cumulative usage fetched from your GMP account.
-- **Daily energy usage** (kWh) – total consumption for the current day.
-- **Estimated bill** (USD) – running cost estimate using your configured price per kWh.
-- Data is refreshed every 30 minutes by default.
+- **Grid energy total** (kWh)
+  Cumulative electricity usage reported by GMP.
+
+- **Daily energy usage** (kWh)
+  Total consumption for the current day.
+
+- **Estimated bill** (USD)
+  Cost estimate using a configurable price per kWh.
+
+- **Automatic updates**
+  Data is refreshed every 30 minutes by default.
+
+---
 
 ## Requirements
 
-- An active Green Mountain Power online account with access to usage data.
-- Your **account number**, **username**, and **password** for Green Mountain Power online services.
-- Home Assistant 2023.7 or later (tested with modern releases).
+- An active Green Mountain Power online account
+- Access to usage data in the GMP customer portal
+- Your **account number**, **username**, and **password**
+- Home Assistant **2023.7 or newer**
+
+---
 
 ## Installation
 
 ### HACS (recommended)
 
-1. In Home Assistant, open **HACS → Integrations → Custom repositories** and add this repository URL as a **Integration** source.
-2. From **HACS → Integrations**, search for **Green Mountain Power Home Assistant** and click **Download**.
-3. Restart Home Assistant.
-4. Go to **Settings → Devices & Services → Add Integration** and search for **Green Mountain Power Home Assistant**.
+1. Open **HACS → Integrations → Custom repositories**
+2. Add this repository URL as **Integration**
+3. Search for **Green Mountain Power Home Assistant**
+4. Click **Download**
+5. Restart Home Assistant
+6. Go to **Settings → Devices & Services → Add Integration**
+7. Search for **Green Mountain Power Home Assistant**
 
-You can also use Home Assistant quick links:
-
+Quick links:
 - [Add repository to HACS](https://my.home-assistant.io/redirect/hacs_repository/?owner=plparadis&repository=greenmountainpower-homeassistant&category=integration)
 - [Start integration setup](https://my.home-assistant.io/redirect/config_flow_start?domain=greenmountainpower)
 
 ### Manual installation
 
-1. Download the contents of `custom_components/greenmountainpower/` into `<config>/custom_components/greenmountainpower/` in your Home Assistant configuration directory.
-2. Restart Home Assistant.
-3. Add the integration via **Settings → Devices & Services → Add Integration** and search for **Green Mountain Power Home Assistant**.
+1. Copy `custom_components/greenmountainpower/` to
+   `<config>/custom_components/greenmountainpower/`
+2. Restart Home Assistant
+3. Add the integration from the UI
+
+---
 
 ## Configuration
 
-Setup is completed entirely through the Home Assistant UI. When adding the integration you will be prompted for:
+Setup is fully UI-based. You will be asked for:
 
 - **Account number** (required)
 - **Username** (required)
 - **Password** (required)
-- **Price per kWh** (optional; default `0.0` USD)
-- **Backfill days** (optional; default `365`) – how many days of history to import on first setup.
+- **Price per kWh** (optional, default `0.0`)
+- **Backfill days** (optional, default `365`)
 
-You can adjust the optional values later under **Integration Options** without re‑entering your credentials.
+You can change optional values later under **Integration Options** without re-entering credentials.
+
+---
 
 ## Sensors
 
 The integration creates the following sensors:
 
-- `sensor.green_mountain_power_grid_energy` – Total energy drawn from the grid (kWh).
-- `sensor.green_mountain_power_daily_energy` – Energy used today (kWh).
-- `sensor.green_mountain_power_estimated_bill` – Estimated cost for the current billing period (USD).
+| Sensor | Description |
+|------|------------|
+| `sensor.green_mountain_power_grid_energy` | Total energy drawn from the grid (kWh) |
+| `sensor.green_mountain_power_daily_energy` | Energy used today (kWh) |
+| `sensor.green_mountain_power_estimated_bill` | Estimated billing cost (USD) |
+
+### Attributes
+
+Sensors may expose attributes such as:
+- Account number
+- Billing period
+- Last update timestamp
+
+---
+
+## Home Assistant Energy dashboard
+
+To use this integration in the **Energy** dashboard:
+
+1. Go to **Settings → Dashboards → Energy**
+2. Under **Electricity grid consumption**
+3. Select `sensor.green_mountain_power_grid_energy`
+4. Set the unit to **kWh** if prompted
+
+Daily energy values will automatically populate historical views once data is available.
+
+---
 
 ## Troubleshooting
 
-- Verify your Green Mountain Power credentials by logging into the web portal; invalid credentials will prevent setup.
-- If setup fails with a connection error, wait a few minutes and try again; GMP’s API can occasionally be slow to respond.
-- Enable debug logging in `configuration.yaml` if you need more detail:
+### Setup fails or credentials are rejected
+- Verify credentials by logging into the GMP web portal
+- Check for special characters in the password
+- Make sure the account has active service
+
+### No data after setup
+- Wait up to **30–60 minutes** after first install
+- Check **Settings → System → Logs**
+- Enable debug logging:
   ```yaml
   logger:
     logs:
       custom_components.greenmountainpower: debug
-  ```
-
-## Contributing
-
-Contributions are welcome! Please review the [CONTRIBUTING.md](CONTRIBUTING.md) guidelines before opening issues or pull requests.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
