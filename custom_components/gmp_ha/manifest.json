@@ -6,8 +6,8 @@
   "dependencies": [],
   "documentation": "https://github.com/plparadis/gmp-ha",
   "integration_type": "service",
-  "issue_tracker": "https://github.com/plparadis/gmp-ha/issues",
   "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/plparadis/gmp-ha/issues",
   "requirements": ["greenmountainpower==0.0.6"],
   "version": "0.0.1"
 }

@@ -4,6 +4,7 @@ from __future__ import annotations
 import logging
 from datetime import timedelta
 
+from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
@@ -24,7 +25,6 @@ from .const import DOMAIN
 from .const import NAME
 from .const import PLATFORMS
 from .const import SCAN_INTERVAL
-from greenmountainpower import exceptions as gmp_exceptions
 
 _LOGGER = logging.getLogger(__name__)
 

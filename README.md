@@ -106,8 +106,8 @@ To jump straight into setup from the README, use the quick link below:
 
 The integration creates the following sensors:
 
-| Sensor                                       | Description                            |
-| -------------------------------------------- | -------------------------------------- |
+| Sensor                         | Description                            |
+| ------------------------------ | -------------------------------------- |
 | `sensor.gmp_ha_grid_energy`    | Total energy drawn from the grid (kWh) |
 | `sensor.gmp_ha_daily_energy`   | Energy used today (kWh)                |
 | `sensor.gmp_ha_estimated_bill` | Estimated billing cost (USD)           |
