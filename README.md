@@ -17,8 +17,6 @@
   <a href="https://github.com/plparadis/greenmountainpower-homeassistant/commits/main"><img src="https://img.shields.io/github/last-commit/plparadis/greenmountainpower-homeassistant" alt="Last Commit"></a>
   <a href="https://github.com/plparadis/greenmountainpower-homeassistant/stargazers"><img src="https://img.shields.io/github/stars/plparadis/greenmountainpower-homeassistant?style=social" alt="Stars"></a>
   <br/>
-  <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=plparadis&repository=greenmountainpower-homeassistant&category=integration"><img src="https://my.home-assistant.io/badges/hacs_repository.svg" alt="Add to HACS"></a>
-  <a href="https://my.home-assistant.io/redirect/config_flow_start?domain=greenmountainpower"><img src="https://my.home-assistant.io/badges/config_flow_start.svg" alt="Start Integration"></a>
 </p>
 
 **Navigation:** [What is this?](#what-is-this-integration) • [Installation](#installation) • [Configuration](#configuration) • [Sensors](#sensors) • [Energy Dashboard](#home-assistant-energy-dashboard) • [Troubleshooting](#troubleshooting)
