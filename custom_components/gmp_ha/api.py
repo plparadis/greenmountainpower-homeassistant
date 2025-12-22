@@ -4,6 +4,7 @@ from __future__ import annotations
 import datetime
 from dataclasses import dataclass
 from typing import List
+from typing import Optional
 
 import greenmountainpower
 
@@ -20,18 +21,26 @@ class GmpClient:
     """Client wrapper around the greenmountainpower library."""
 
     def __init__(self, account_number: int, username: str, password: str) -> None:
-        self._api = greenmountainpower.api.GreenMountainPowerApi(
-            account_number=account_number,
-            username=username,
-            password=password,
-        )
+        self._account_number = account_number
+        self._username = username
+        self._password = password
+        self._api: Optional[greenmountainpower.api.GreenMountainPowerApi] = None
+
+    def _get_api(self):
+        if self._api is None:
+            self._api = greenmountainpower.api.GreenMountainPowerApi(
+                account_number=self._account_number,
+                username=self._username,
+                password=self._password,
+            )
+        return self._api
 
     def get_hourly_usage(
         self, start: datetime.datetime, end: datetime.datetime
     ) -> List[HourlyUsage]:
         """Return hourly usage data between the provided timestamps."""
 
-        usages = self._api.get_usage(
+        usages = self._get_api().get_usage(
             precision=greenmountainpower.api.UsagePrecision.HOURLY,
             start_time=start,
             end_time=end,
