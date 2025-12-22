@@ -4,5 +4,5 @@
   "render_readme": true,
   "domains": ["greenmountainpower"],
   "country": ["US"],
-  "homeassistant": "2023.7.0"
+  "homeassistant": "2025.12.4"
 }

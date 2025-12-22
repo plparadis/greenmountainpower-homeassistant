@@ -1,9 +1,10 @@
 repository:
-  description: Green Mountain Power integration for Home Assistant.
+  description: "Home Assistant integration for Green Mountain Power energy usage and billing data"
+  homepage: "https://github.com/plparadis/greenmountainpower-homeassistant"
   topics:
     - home-assistant
-    - homeassistant
     - hacs
     - energy
     - utility
     - green-mountain-power
+    - python
