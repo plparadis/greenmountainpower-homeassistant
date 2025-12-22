@@ -3,13 +3,13 @@ from __future__ import annotations
 
 from datetime import timedelta
 
+import voluptuous as vol
 from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.util import dt as dt_util
-import voluptuous as vol
 
 from .api import GmpClient
 from .const import CONF_ACCOUNT_NUMBER
