@@ -92,7 +92,9 @@ class GmpHaCoordinator(DataUpdateCoordinator):
     ) -> None:
         self.client = client
         self.price_per_kwh = price_per_kwh
-        self._start_time = dt_util.utcnow() - timedelta(days=backfill_days)
+
+        now = dt_util.now()
+        self._start_time = now - timedelta(days=backfill_days)
 
         super().__init__(
             hass,
@@ -104,7 +106,7 @@ class GmpHaCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Fetch usage data from the API."""
 
-        end = dt_util.utcnow()
+        end = dt_util.now()
 
         try:
             usages = await self.hass.async_add_executor_job(
@@ -116,7 +118,7 @@ class GmpHaCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(err) from err
 
         total_kwh = sum(usage.consumed_kwh for usage in usages)
-        today = dt_util.as_local(dt_util.utcnow()).date()
+        today = dt_util.now().date()
         today_kwh = sum(
             usage.consumed_kwh
             for usage in usages
