@@ -38,6 +38,7 @@
 This Home Assistant integration connects to your **Green Mountain Power online account** and retrieves your electricity usage data.
 
 It allows you to:
+
 - Track your **energy consumption** directly in Home Assistant
 - Estimate your **electricity costs**
 - Feed data into the **Home Assistant Energy dashboard**
@@ -107,15 +108,16 @@ To jump straight into setup from the README, use the quick link below:
 
 The integration creates the following sensors:
 
-| Sensor | Description |
-|-------|-------------|
-| `sensor.green_mountain_power_grid_energy` | Total energy drawn from the grid (kWh) |
-| `sensor.green_mountain_power_daily_energy` | Energy used today (kWh) |
-| `sensor.green_mountain_power_estimated_bill` | Estimated billing cost (USD) |
+| Sensor                                       | Description                            |
+| -------------------------------------------- | -------------------------------------- |
+| `sensor.green_mountain_power_grid_energy`    | Total energy drawn from the grid (kWh) |
+| `sensor.green_mountain_power_daily_energy`   | Energy used today (kWh)                |
+| `sensor.green_mountain_power_estimated_bill` | Estimated billing cost (USD)           |
 
 ### Attributes
 
 Sensors may expose attributes such as:
+
 - Account number
 - Billing period
 - Last update timestamp
@@ -138,11 +140,13 @@ Daily energy values will automatically populate historical views once data is av
 ## Troubleshooting
 
 ### Setup fails or credentials are rejected
+
 - Verify credentials by logging into the GMP web portal.
 - Check for special characters in the password.
 - Make sure the account has active service.
 
 ### No data after setup
+
 - Wait up to **30–60 minutes** after first install.
 - Check **Settings → System → Logs**.
 - Enable debug logging:
@@ -154,6 +158,7 @@ Daily energy values will automatically populate historical views once data is av
   ```
 
 ### Need help?
+
 - Open a [GitHub issue](https://github.com/plparadis/greenmountainpower-homeassistant/issues) with details and logs.
 - Visit the [Home Assistant Community forum](https://community.home-assistant.io/).
 
