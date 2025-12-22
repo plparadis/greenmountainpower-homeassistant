@@ -1,0 +1,46 @@
+name: Sync repository metadata
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update-metadata:
+    name: Update repository description and topics
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      administration: write
+    steps:
+      - name: Set repository metadata
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const description = "Home Assistant integration for Green Mountain Power energy usage and billing data";
+            const homepage = "https://github.com/plparadis/greenmountainpower-homeassistant";
+            const topics = [
+              "home-assistant",
+              "hacs",
+              "energy",
+              "utility",
+              "green-mountain-power",
+              "python",
+            ];
+
+            const { owner, repo } = context.repo;
+
+            await github.rest.repos.update({
+              owner,
+              repo,
+              description,
+              homepage,
+            });
+
+            await github.rest.repos.replaceAllTopics({
+              owner,
+              repo,
+              names: topics,
+            });
