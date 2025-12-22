@@ -1,15 +1,13 @@
 """Config flow for the GMP HA integration."""
 from __future__ import annotations
 
-from datetime import timedelta
-
 import voluptuous as vol
 from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
-from homeassistant.util import dt as dt_util
+from oauthlib.oauth2.rfc6749 import errors as oauth_errors
 
 from .api import GmpClient
 from .const import CONF_ACCOUNT_NUMBER
@@ -83,17 +81,17 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def _validate_input(self, user_input: dict):
         """Validate the user input allows us to connect."""
 
-        client = GmpClient(
+        client = await GmpClient.create(
+            self.hass,
             account_number=int(user_input[CONF_ACCOUNT_NUMBER]),
             username=user_input[CONF_USERNAME],
             password=user_input[CONF_PASSWORD],
         )
 
-        start = dt_util.now() - timedelta(days=1)
-        end = dt_util.now()
-
         try:
-            await self.hass.async_add_executor_job(client.get_hourly_usage, start, end)
+            await client.async_get_account_status()
+        except oauth_errors.InvalidGrantError as err:
+            raise InvalidAuth from err
         except gmp_exceptions.UnauthorizedException as err:
             raise InvalidAuth from err
         except Exception as err:  # noqa: BLE001

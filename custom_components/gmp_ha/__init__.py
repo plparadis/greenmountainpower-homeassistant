@@ -44,7 +44,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         CONF_BACKFILL_DAYS, entry.data.get(CONF_BACKFILL_DAYS, DEFAULT_BACKFILL_DAYS)
     )
 
-    client = GmpClient(
+    client = await GmpClient.create(
+        hass,
         account_number=account_number,
         username=username,
         password=password,
@@ -109,9 +110,7 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         end = dt_util.now()
 
         try:
-            usages = await self.hass.async_add_executor_job(
-                self.client.get_hourly_usage, self._start_time, end
-            )
+            usages = await self.client.async_get_hourly_usage(self._start_time, end)
         except gmp_exceptions.UnauthorizedException as err:
             raise ConfigEntryAuthFailed from err
         except Exception as err:  # noqa: BLE001
