@@ -89,8 +89,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             password=user_input[CONF_PASSWORD],
         )
 
-        start = dt_util.utcnow() - timedelta(days=1)
-        end = dt_util.utcnow()
+        start = dt_util.now() - timedelta(days=1)
+        end = dt_util.now()
 
         try:
             await self.hass.async_add_executor_job(client.get_hourly_usage, start, end)
