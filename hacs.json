@@ -2,7 +2,9 @@
   "name": "Green Mountain Power Home Assistant",
   "content_in_root": false,
   "render_readme": true,
+  "zip_release": false,
+  "filename": "greenmountainpower.zip",
   "domains": ["greenmountainpower"],
-  "country": ["US"],
+  "country": "US",
   "homeassistant": "2023.7.0"
 }
