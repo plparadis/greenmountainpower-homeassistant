@@ -2,7 +2,6 @@
   "name": "GMP HA",
   "content_in_root": false,
   "render_readme": true,
-  "domains": ["gmp_ha"],
   "country": ["US"],
   "homeassistant": "2025.12.4"
 }
