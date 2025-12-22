@@ -12,7 +12,7 @@
   <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-41BDF5.svg" alt="HACS"></a>
   <a href="https://github.com/plparadis/gmp-ha/releases"><img src="https://img.shields.io/github/v/release/plparadis/gmp-ha" alt="Release"></a>
   <a href="https://github.com/plparadis/gmp-ha/releases/latest"><img src="https://img.shields.io/github/downloads/plparadis/gmp-ha/latest/total?label=latest%20downloads" alt="Release Downloads"></a>
-  <a href="https://github.com/plparadis/gmp-ha/blob/main/LICENSE"><img src="https://img.shields.io/github/license/plparadis/gmp-ha.svg" alt="License"></a>
+  <a href="https://github.com/plparadis/gmp-ha/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/plparadis/gmp-ha.svg" alt="License"></a>
   <br/>
   <a href="https://github.com/plparadis/gmp-ha/commits/main"><img src="https://img.shields.io/github/last-commit/plparadis/gmp-ha" alt="Last Commit"></a>
   <a href="https://github.com/plparadis/gmp-ha/stargazers"><img src="https://img.shields.io/github/stars/plparadis/gmp-ha?style=social" alt="Stars"></a>

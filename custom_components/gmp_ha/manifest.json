@@ -1,13 +1,13 @@
 {
   "domain": "gmp_ha",
   "name": "GMP HA",
-  "version": "0.0.1",
-  "documentation": "https://github.com/plparadis/gmp-ha",
-  "issue_tracker": "https://github.com/plparadis/gmp-ha/issues",
-  "dependencies": [],
   "codeowners": ["@plparadis"],
-  "requirements": ["greenmountainpower==0.0.6"],
   "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/plparadis/gmp-ha",
   "integration_type": "service",
-  "iot_class": "cloud_polling"
+  "issue_tracker": "https://github.com/plparadis/gmp-ha/issues",
+  "iot_class": "cloud_polling",
+  "requirements": ["greenmountainpower==0.0.6"],
+  "version": "0.0.1"
 }
