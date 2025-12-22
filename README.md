@@ -1,7 +1,7 @@
 # Green Mountain Power Home Assistant Integration
 
 <p align="center">
-  <img src="example.png" alt="Green Mountain Power in Home Assistant" width="320" />
+  <img src="logo.png" alt="Green Mountain Power in Home Assistant" width="320" />
 </p>
 
 <p align="center">
