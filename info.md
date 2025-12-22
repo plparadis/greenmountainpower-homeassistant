@@ -15,7 +15,7 @@
 | -------- | -------------------------- |
 | `sensor` | Usage, cost, and bill data |
 
-![example][exampleimg]
+![Green Mountain Power Home Assistant logo][logoimg]
 
 {% if not installed %}
 
@@ -47,7 +47,7 @@ Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [in
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [discord]: https://discord.gg/Qa5fW2R
 [discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
-[exampleimg]: example.png
+[logoimg]: logo.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [license]: https://github.com/plparadis/greenmountainpower-homeassistant/blob/main/LICENSE
