@@ -4,6 +4,7 @@ from __future__ import annotations
 import logging
 from datetime import timedelta
 
+from greenmountainpower import api as gmp_api
 from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -122,13 +123,13 @@ class GmpHaCoordinator(DataUpdateCoordinator):
                 hourly_start = end - self._refresh_window
 
             new_usages = await self.client.async_get_usage(
-                self.client.api.UsagePrecision.HOURLY, hourly_start, end
+                gmp_api.UsagePrecision.HOURLY, hourly_start, end
             )
             daily_usage = await self.client.async_get_usage(
-                self.client.api.UsagePrecision.DAILY, daily_start, end
+                gmp_api.UsagePrecision.DAILY, daily_start, end
             )
             monthly_usage = await self.client.async_get_usage(
-                self.client.api.UsagePrecision.MONTHLY, monthly_start, end
+                gmp_api.UsagePrecision.MONTHLY, monthly_start, end
             )
         except gmp_exceptions.UnauthorizedException as err:
             raise ConfigEntryAuthFailed from err
