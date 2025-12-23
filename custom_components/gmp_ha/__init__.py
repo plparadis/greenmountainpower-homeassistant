@@ -14,6 +14,7 @@ from homeassistant.helpers.update_coordinator import UpdateFailed
 from homeassistant.util import dt as dt_util
 
 from .api import GmpClient
+from .api import HourlyUsage
 from .const import CONF_ACCOUNT_NUMBER
 from .const import CONF_BACKFILL_DAYS
 from .const import CONF_PASSWORD
@@ -93,6 +94,9 @@ class GmpHaCoordinator(DataUpdateCoordinator):
     ) -> None:
         self.client = client
         self.price_per_kwh = price_per_kwh
+        self._backfill_days = backfill_days
+        self._usage_history: list[HourlyUsage] = []
+        self._refresh_window = timedelta(hours=1)
 
         now = dt_util.now()
         self._start_time = now - timedelta(days=backfill_days)
@@ -108,14 +112,36 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         """Fetch usage data from the API."""
 
         end = dt_util.now()
+        daily_start = end - timedelta(days=7)
+        monthly_start = end - timedelta(days=62)
 
         try:
-            usages = await self.client.async_get_hourly_usage(self._start_time, end)
+            if not self._usage_history:
+                hourly_start = self._start_time
+            else:
+                hourly_start = end - self._refresh_window
+
+            new_usages = await self.client.async_get_usage(
+                self.client.api.UsagePrecision.HOURLY, hourly_start, end
+            )
+            daily_usage = await self.client.async_get_usage(
+                self.client.api.UsagePrecision.DAILY, daily_start, end
+            )
+            monthly_usage = await self.client.async_get_usage(
+                self.client.api.UsagePrecision.MONTHLY, monthly_start, end
+            )
         except gmp_exceptions.UnauthorizedException as err:
             raise ConfigEntryAuthFailed from err
         except Exception as err:  # noqa: BLE001
             raise UpdateFailed(err) from err
 
+        self._usage_history = _merge_usage(self._usage_history, new_usages)
+        window_start = end - timedelta(days=self._backfill_days)
+        self._usage_history = [
+            usage for usage in self._usage_history if usage.start_time >= window_start
+        ]
+
+        usages = self._usage_history
         total_kwh = sum(usage.consumed_kwh for usage in usages)
         today = dt_util.now().date()
         today_kwh = sum(
@@ -123,11 +149,93 @@ class GmpHaCoordinator(DataUpdateCoordinator):
             for usage in usages
             if dt_util.as_local(dt_util.as_utc(usage.start_time)).date() == today
         )
-        estimated_cost = total_kwh * self.price_per_kwh
+        yesterday = today - timedelta(days=1)
+        yesterday_kwh = _find_daily_value(daily_usage, yesterday)
+        current_hour, previous_hour = _latest_hours(usages)
+        hourly_trend = _trend(current_hour, previous_hour)
+        daily_trend = _trend(today_kwh, yesterday_kwh)
+
+        current_month = (end.year, end.month)
+        previous_month = _previous_month(end)
+        current_month_kwh = _find_monthly_value(monthly_usage, current_month)
+        previous_month_kwh = _find_monthly_value(monthly_usage, previous_month)
+        estimated_cost = (
+            round(current_month_kwh * self.price_per_kwh, 2)
+            if current_month_kwh is not None
+            else round(total_kwh * self.price_per_kwh, 2)
+        )
+        previous_bill = (
+            round(previous_month_kwh * self.price_per_kwh, 2)
+            if previous_month_kwh is not None
+            else None
+        )
 
         return {
             "total_kwh": round(total_kwh, 3),
             "today_kwh": round(today_kwh, 3),
-            "estimated_cost": round(estimated_cost, 2),
+            "estimated_cost": estimated_cost,
+            "yesterday_kwh": _round_or_none(yesterday_kwh),
+            "current_hour_kwh": _round_or_none(current_hour),
+            "previous_hour_kwh": _round_or_none(previous_hour),
+            "hourly_trend": _round_or_none(hourly_trend),
+            "daily_trend": _round_or_none(daily_trend),
+            "current_month_kwh": _round_or_none(current_month_kwh),
+            "previous_month_kwh": _round_or_none(previous_month_kwh),
+            "previous_bill": previous_bill,
             "usages": usages,
         }
+
+
+def _merge_usage(
+    existing: list[HourlyUsage], new_values: list[HourlyUsage]
+) -> list[HourlyUsage]:
+    if not existing:
+        return sorted(new_values, key=lambda usage: usage.start_time)
+
+    combined = {usage.start_time: usage for usage in existing}
+    for usage in new_values:
+        combined[usage.start_time] = usage
+    return sorted(combined.values(), key=lambda usage: usage.start_time)
+
+
+def _find_daily_value(usages: list[HourlyUsage], target_date):
+    for usage in usages:
+        if dt_util.as_local(dt_util.as_utc(usage.start_time)).date() == target_date:
+            return usage.consumed_kwh
+    return None
+
+
+def _latest_hours(usages: list[HourlyUsage]):
+    if not usages:
+        return None, None
+    sorted_usages = sorted(usages, key=lambda usage: usage.start_time)
+    current = sorted_usages[-1].consumed_kwh
+    previous = sorted_usages[-2].consumed_kwh if len(sorted_usages) > 1 else None
+    return current, previous
+
+
+def _trend(current: float | None, previous: float | None):
+    if current is None or previous is None:
+        return None
+    return current - previous
+
+
+def _find_monthly_value(usages: list[HourlyUsage], target_month: tuple[int, int]):
+    if target_month is None:
+        return None
+    for usage in usages:
+        if (usage.start_time.year, usage.start_time.month) == target_month:
+            return usage.consumed_kwh
+    return None
+
+
+def _previous_month(date_time):
+    month = date_time.month - 1 or 12
+    year = date_time.year - 1 if month == 12 else date_time.year
+    return year, month
+
+
+def _round_or_none(value: float | None, digits: int = 3):
+    if value is None:
+        return None
+    return round(value, digits)
