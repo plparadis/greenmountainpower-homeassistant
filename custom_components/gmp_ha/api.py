@@ -43,14 +43,17 @@ class GmpClient:
 
         return await self.hass.async_add_executor_job(self.api.get_account_status)
 
-    async def async_get_hourly_usage(
-        self, start: datetime.datetime, end: datetime.datetime
+    async def async_get_usage(
+        self,
+        precision: gmp_api.UsagePrecision,
+        start: datetime.datetime,
+        end: datetime.datetime,
     ) -> List[HourlyUsage]:
-        """Return hourly usage data between the provided timestamps."""
+        """Return usage data between the provided timestamps."""
 
         usages = await self.hass.async_add_executor_job(
             self.api.get_usage,
-            gmp_api.UsagePrecision.HOURLY,
+            precision,
             start,
             end,
         )

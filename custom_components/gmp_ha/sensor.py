@@ -27,6 +27,14 @@ async def async_setup_entry(
             GmpGridEnergySensor(coordinator, entry.entry_id),
             GmpDailyEnergySensor(coordinator, entry.entry_id),
             GmpEstimatedBillSensor(coordinator, entry.entry_id),
+            GmpYesterdayEnergySensor(coordinator, entry.entry_id),
+            GmpCurrentHourEnergySensor(coordinator, entry.entry_id),
+            GmpPreviousHourEnergySensor(coordinator, entry.entry_id),
+            GmpHourlyTrendSensor(coordinator, entry.entry_id),
+            GmpDailyTrendSensor(coordinator, entry.entry_id),
+            GmpCurrentMonthEnergySensor(coordinator, entry.entry_id),
+            GmpPreviousMonthEnergySensor(coordinator, entry.entry_id),
+            GmpPreviousBillSensor(coordinator, entry.entry_id),
         ]
     )
 
@@ -61,6 +69,134 @@ class GmpDailyEnergySensor(GmpHaEntity, SensorEntity):
     @property
     def native_value(self):
         return self.coordinator.data["today_kwh"]
+
+
+class GmpYesterdayEnergySensor(GmpHaEntity, SensorEntity):
+    """Energy used yesterday."""
+
+    _attr_translation_key = "yesterday_energy"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="yesterday_energy")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["yesterday_kwh"]
+
+
+class GmpCurrentHourEnergySensor(GmpHaEntity, SensorEntity):
+    """Energy used in the current hour."""
+
+    _attr_translation_key = "current_hour_energy"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="current_hour_energy")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["current_hour_kwh"]
+
+
+class GmpPreviousHourEnergySensor(GmpHaEntity, SensorEntity):
+    """Energy used in the previous hour."""
+
+    _attr_translation_key = "previous_hour_energy"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="previous_hour_energy")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["previous_hour_kwh"]
+
+
+class GmpHourlyTrendSensor(GmpHaEntity, SensorEntity):
+    """Difference between the current and previous hour usage."""
+
+    _attr_translation_key = "hourly_trend"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="hourly_trend")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["hourly_trend"]
+
+
+class GmpDailyTrendSensor(GmpHaEntity, SensorEntity):
+    """Difference between today and yesterday usage."""
+
+    _attr_translation_key = "daily_trend"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="daily_trend")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["daily_trend"]
+
+
+class GmpCurrentMonthEnergySensor(GmpHaEntity, SensorEntity):
+    """Energy used in the current month."""
+
+    _attr_translation_key = "current_month_energy"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="current_month_energy")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["current_month_kwh"]
+
+
+class GmpPreviousMonthEnergySensor(GmpHaEntity, SensorEntity):
+    """Energy used in the previous month."""
+
+    _attr_translation_key = "previous_month_energy"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="previous_month_energy")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["previous_month_kwh"]
+
+
+class GmpPreviousBillSensor(GmpHaEntity, SensorEntity):
+    """Cost of the previous month based on configured pricing."""
+
+    _attr_translation_key = "previous_bill"
+    _attr_device_class = SensorDeviceClass.MONETARY
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = "USD"
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="previous_bill")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["previous_bill"]
 
 
 class GmpEstimatedBillSensor(GmpHaEntity, SensorEntity):

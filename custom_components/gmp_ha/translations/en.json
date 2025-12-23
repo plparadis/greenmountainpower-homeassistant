@@ -43,6 +43,30 @@
       },
       "estimated_bill": {
         "name": "Estimated bill"
+      },
+      "yesterday_energy": {
+        "name": "Yesterday energy"
+      },
+      "current_hour_energy": {
+        "name": "Current hour energy"
+      },
+      "previous_hour_energy": {
+        "name": "Previous hour energy"
+      },
+      "hourly_trend": {
+        "name": "Hourly trend"
+      },
+      "daily_trend": {
+        "name": "Daily trend"
+      },
+      "current_month_energy": {
+        "name": "Current month energy"
+      },
+      "previous_month_energy": {
+        "name": "Previous month energy"
+      },
+      "previous_bill": {
+        "name": "Previous bill"
       }
     }
   }
