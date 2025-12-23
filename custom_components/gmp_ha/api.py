@@ -10,6 +10,7 @@ import greenmountainpower.api as gmp_api
 import oauthlib.oauth2
 import requests_oauthlib
 from homeassistant.core import HomeAssistant
+from homeassistant.util import dt as dt_util
 
 
 @dataclass
@@ -58,7 +59,10 @@ class GmpClient:
             end,
         )
         return [
-            HourlyUsage(start_time=usage.start_time, consumed_kwh=usage.consumed_kwh)
+            HourlyUsage(
+                start_time=_ensure_utc(usage.start_time),
+                consumed_kwh=usage.consumed_kwh,
+            )
             for usage in usages
         ]
 
@@ -87,3 +91,12 @@ def _create_gmp_api(
     )
 
     return api
+
+
+def _ensure_utc(value: datetime.datetime) -> datetime.datetime:
+    """Normalize a datetime to an aware UTC value."""
+
+    if value.tzinfo is None or value.tzinfo.utcoffset(value) is None:
+        return value.replace(tzinfo=datetime.timezone.utc)
+
+    return dt_util.as_utc(value)
