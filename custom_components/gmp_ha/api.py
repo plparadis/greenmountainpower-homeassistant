@@ -1,4 +1,5 @@
 """API wrapper for GMP HA usage data."""
+
 from __future__ import annotations
 
 import datetime
@@ -18,6 +19,7 @@ class HourlyUsage:
 
     start_time: datetime.datetime
     consumed_kwh: float
+
 
 @dataclass
 class GmpClient:
