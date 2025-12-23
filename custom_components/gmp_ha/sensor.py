@@ -5,7 +5,6 @@ from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.components.sensor import SensorStateClass
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import UnitOfCurrency
 from homeassistant.const import UnitOfEnergy
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -70,7 +69,7 @@ class GmpEstimatedBillSensor(GmpHaEntity, SensorEntity):
     _attr_translation_key = "estimated_bill"
     _attr_device_class = SensorDeviceClass.MONETARY
     _attr_state_class = SensorStateClass.TOTAL
-    _attr_native_unit_of_measurement = UnitOfCurrency.USD
+    _attr_native_unit_of_measurement = "USD"
 
     def __init__(self, coordinator, entry_id: str) -> None:
         super().__init__(coordinator, entry_id, unique_suffix="estimated_bill")

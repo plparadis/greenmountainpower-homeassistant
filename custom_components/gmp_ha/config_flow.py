@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+
 import voluptuous as vol
 from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant import config_entries
