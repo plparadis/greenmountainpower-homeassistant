@@ -4,8 +4,8 @@ from __future__ import annotations
 import logging
 from datetime import timedelta
 
-from greenmountainpower.api import UsagePrecision
 from greenmountainpower import exceptions as gmp_exceptions
+from greenmountainpower.api import UsagePrecision
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
