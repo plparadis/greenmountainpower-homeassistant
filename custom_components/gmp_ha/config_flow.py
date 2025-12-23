@@ -114,7 +114,7 @@ class OptionsFlow(config_entries.OptionsFlow):
     """Handle options for GMP HA."""
 
     def __init__(self, config_entry):
-        self.config_entry = config_entry
+        super().__init__(config_entry)
 
     async def async_step_init(self, user_input=None):
         return await self.async_step_user(user_input)
