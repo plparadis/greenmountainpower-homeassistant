@@ -19,7 +19,7 @@ class HourlyUsage:
     start_time: datetime.datetime
     consumed_kwh: float
 
-
+@dataclass
 class GmpClient:
     """Client wrapper around the greenmountainpower library."""
 
