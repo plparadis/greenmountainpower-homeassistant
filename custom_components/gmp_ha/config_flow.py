@@ -1,6 +1,7 @@
 """Config flow for the GMP HA integration."""
 from __future__ import annotations
 
+import logging
 import voluptuous as vol
 from greenmountainpower import exceptions as gmp_exceptions
 from homeassistant import config_entries
@@ -18,6 +19,9 @@ from .const import CONF_USERNAME
 from .const import DEFAULT_BACKFILL_DAYS
 from .const import DEFAULT_PRICE_PER_KWH
 from .const import DOMAIN
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -41,6 +45,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             except CannotConnect:
                 self._errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001
+                _LOGGER.exception("Unexpected error during GMP HA config flow")
                 self._errors["base"] = "unknown"
             else:
                 await self.async_set_unique_id(str(user_input[CONF_ACCOUNT_NUMBER]))
@@ -95,6 +100,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         except gmp_exceptions.UnauthorizedException as err:
             raise InvalidAuth from err
         except Exception as err:  # noqa: BLE001
+            _LOGGER.exception("GMP HA validation failed")
             raise CannotConnect from err
 
     @staticmethod
