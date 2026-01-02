@@ -97,6 +97,6 @@ def _ensure_utc(value: datetime.datetime) -> datetime.datetime:
     """Normalize a datetime to an aware UTC value."""
 
     if value.tzinfo is None or value.tzinfo.utcoffset(value) is None:
-        return value.replace(tzinfo=datetime.timezone.utc)
+        value = value.replace(tzinfo=dt_util.DEFAULT_TIME_ZONE)
 
     return dt_util.as_utc(value)

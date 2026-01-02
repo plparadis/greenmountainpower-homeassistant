@@ -152,7 +152,13 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         )
         yesterday = today - timedelta(days=1)
         yesterday_kwh = _find_daily_value(daily_usage, yesterday)
-        current_hour, previous_hour = _latest_hours(usages)
+        current_hour_usage, previous_hour_usage = _latest_hours(usages)
+        current_hour = (
+            current_hour_usage.consumed_kwh if current_hour_usage is not None else None
+        )
+        previous_hour = (
+            previous_hour_usage.consumed_kwh if previous_hour_usage is not None else None
+        )
         hourly_trend = _trend(current_hour, previous_hour)
         daily_trend = _trend(today_kwh, yesterday_kwh)
 
@@ -178,6 +184,12 @@ class GmpHaCoordinator(DataUpdateCoordinator):
             "yesterday_kwh": _round_or_none(yesterday_kwh),
             "current_hour_kwh": _round_or_none(current_hour),
             "previous_hour_kwh": _round_or_none(previous_hour),
+            "current_hour_start": current_hour_usage.start_time
+            if current_hour_usage is not None
+            else None,
+            "previous_hour_start": previous_hour_usage.start_time
+            if previous_hour_usage is not None
+            else None,
             "hourly_trend": _round_or_none(hourly_trend),
             "daily_trend": _round_or_none(daily_trend),
             "current_month_kwh": _round_or_none(current_month_kwh),
@@ -210,8 +222,8 @@ def _latest_hours(usages: list[HourlyUsage]):
     if not usages:
         return None, None
     sorted_usages = sorted(usages, key=lambda usage: usage.start_time)
-    current = sorted_usages[-1].consumed_kwh
-    previous = sorted_usages[-2].consumed_kwh if len(sorted_usages) > 1 else None
+    current = sorted_usages[-1]
+    previous = sorted_usages[-2] if len(sorted_usages) > 1 else None
     return current, previous
 
 

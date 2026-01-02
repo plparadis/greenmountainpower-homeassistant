@@ -1,6 +1,8 @@
 """Sensor platform for the GMP HA integration."""
 from __future__ import annotations
 
+from datetime import timedelta
+
 from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.components.sensor import SensorStateClass
@@ -8,6 +10,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfEnergy
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN
 from .entity import GmpHaEntity
@@ -92,7 +95,7 @@ class GmpCurrentHourEnergySensor(GmpHaEntity, SensorEntity):
 
     _attr_translation_key = "current_hour_energy"
     _attr_device_class = SensorDeviceClass.ENERGY
-    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_state_class = SensorStateClass.TOTAL
     _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
 
     def __init__(self, coordinator, entry_id: str) -> None:
@@ -102,13 +105,30 @@ class GmpCurrentHourEnergySensor(GmpHaEntity, SensorEntity):
     def native_value(self):
         return self.coordinator.data["current_hour_kwh"]
 
+    @property
+    def last_reset(self):
+        start = self.coordinator.data["current_hour_start"]
+        if start is None:
+            return None
+        return dt_util.as_utc(start)
+
+    @property
+    def extra_state_attributes(self):
+        start = self.coordinator.data["current_hour_start"]
+        if start is None:
+            return None
+        return {
+            "start_time": dt_util.as_local(start).isoformat(),
+            "end_time": (dt_util.as_local(start) + timedelta(hours=1)).isoformat(),
+        }
+
 
 class GmpPreviousHourEnergySensor(GmpHaEntity, SensorEntity):
     """Energy used in the previous hour."""
 
     _attr_translation_key = "previous_hour_energy"
     _attr_device_class = SensorDeviceClass.ENERGY
-    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_state_class = SensorStateClass.TOTAL
     _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
 
     def __init__(self, coordinator, entry_id: str) -> None:
@@ -117,6 +137,23 @@ class GmpPreviousHourEnergySensor(GmpHaEntity, SensorEntity):
     @property
     def native_value(self):
         return self.coordinator.data["previous_hour_kwh"]
+
+    @property
+    def last_reset(self):
+        start = self.coordinator.data["previous_hour_start"]
+        if start is None:
+            return None
+        return dt_util.as_utc(start)
+
+    @property
+    def extra_state_attributes(self):
+        start = self.coordinator.data["previous_hour_start"]
+        if start is None:
+            return None
+        return {
+            "start_time": dt_util.as_local(start).isoformat(),
+            "end_time": (dt_util.as_local(start) + timedelta(hours=1)).isoformat(),
+        }
 
 
 class GmpHourlyTrendSensor(GmpHaEntity, SensorEntity):
