@@ -65,6 +65,15 @@
       "previous_month_energy": {
         "name": "Previous month energy"
       },
+      "month_to_date_energy": {
+        "name": "Month-to-date energy"
+      },
+      "previous_month_to_date_energy": {
+        "name": "Previous month-to-date energy"
+      },
+      "month_to_date_trend": {
+        "name": "Month-to-date trend"
+      },
       "previous_bill": {
         "name": "Previous bill"
       }

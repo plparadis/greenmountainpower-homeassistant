@@ -50,6 +50,7 @@ This integration focuses on **simplicity and reliability**. It does **not** atte
 
 - **Grid energy total** (kWh) — cumulative electricity usage reported by GMP
 - **Daily energy usage** (kWh) — total consumption for the current day
+- **Month-to-date comparison** — current month-to-date energy with previous month-to-date and the delta
 - **Estimated bill** (USD) — cost estimate using a configurable price per kWh
 - **Automatic updates** — data is refreshed every 30 minutes by default
 
@@ -106,19 +107,22 @@ To jump straight into setup from the README, use the quick link below:
 
 The integration creates the following sensors:
 
-| Sensor                                | Description                                                  |
-| ------------------------------------- | ------------------------------------------------------------ |
-| `sensor.gmp_ha_grid_energy`           | Total energy drawn from the grid (kWh)                       |
-| `sensor.gmp_ha_daily_energy`          | Energy used today (kWh)                                      |
-| `sensor.gmp_ha_yesterday_energy`      | Energy used yesterday (kWh)                                  |
-| `sensor.gmp_ha_current_hour_energy`   | Energy used in the current hour (kWh)                        |
-| `sensor.gmp_ha_previous_hour_energy`  | Energy used in the previous hour (kWh)                       |
-| `sensor.gmp_ha_hourly_trend`          | Difference between current and previous hour usage (kWh)     |
-| `sensor.gmp_ha_daily_trend`           | Difference between today and yesterday usage (kWh)           |
-| `sensor.gmp_ha_current_month_energy`  | Energy used in the current month (kWh)                       |
-| `sensor.gmp_ha_previous_month_energy` | Energy used in the previous month (kWh)                      |
-| `sensor.gmp_ha_estimated_bill`        | Estimated cost for the current billing period (USD)          |
-| `sensor.gmp_ha_previous_bill`         | Cost of the previous month based on configured pricing (USD) |
+| Sensor                                        | Description                                                        |
+| --------------------------------------------- | ------------------------------------------------------------------ |
+| `sensor.gmp_ha_grid_energy`                   | Total energy drawn from the grid (kWh)                             |
+| `sensor.gmp_ha_daily_energy`                  | Energy used today (kWh)                                            |
+| `sensor.gmp_ha_yesterday_energy`              | Energy used yesterday (kWh)                                        |
+| `sensor.gmp_ha_current_hour_energy`           | Energy used in the current hour (kWh)                              |
+| `sensor.gmp_ha_previous_hour_energy`          | Energy used in the previous hour (kWh)                             |
+| `sensor.gmp_ha_hourly_trend`                  | Difference between current and previous hour usage (kWh)           |
+| `sensor.gmp_ha_daily_trend`                   | Difference between today and yesterday usage (kWh)                 |
+| `sensor.gmp_ha_current_month_energy`          | Energy used in the current month (kWh)                             |
+| `sensor.gmp_ha_previous_month_energy`         | Energy used in the previous month (kWh)                            |
+| `sensor.gmp_ha_month_to_date_energy`          | Energy used so far this month (kWh)                                |
+| `sensor.gmp_ha_previous_month_to_date_energy` | Energy used during the same number of days last month (kWh)        |
+| `sensor.gmp_ha_month_to_date_trend`           | Difference between this month-to-date and last month-to-date (kWh) |
+| `sensor.gmp_ha_estimated_bill`                | Estimated cost for the current billing period (USD)                |
+| `sensor.gmp_ha_previous_bill`                 | Cost of the previous month based on configured pricing (USD)       |
 
 ### Attributes
 
