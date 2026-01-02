@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-import datetime
 from dataclasses import dataclass
+import datetime
 from functools import partial
 from typing import List
 
 import greenmountainpower.api as gmp_api
-import oauthlib.oauth2
-import requests_oauthlib
 from homeassistant.core import HomeAssistant
 from homeassistant.util import dt as dt_util
+import oauthlib.oauth2
+import requests_oauthlib
 
 
 @dataclass
