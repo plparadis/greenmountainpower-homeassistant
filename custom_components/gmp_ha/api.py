@@ -1,4 +1,5 @@
 """API wrapper for GMP HA usage data."""
+
 from __future__ import annotations
 
 import datetime
