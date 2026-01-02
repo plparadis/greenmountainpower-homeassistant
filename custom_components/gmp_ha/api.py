@@ -1,10 +1,11 @@
 """API wrapper for GMP HA usage data."""
-
 from __future__ import annotations
+
 import datetime
 from dataclasses import dataclass
 from functools import partial
 from typing import List
+
 import greenmountainpower.api as gmp_api
 import oauthlib.oauth2
 import requests_oauthlib

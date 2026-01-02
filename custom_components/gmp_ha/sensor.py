@@ -1,5 +1,4 @@
 """Sensor platform for the GMP HA integration."""
-
 from __future__ import annotations
 
 from datetime import timedelta

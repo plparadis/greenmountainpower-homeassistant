@@ -1,5 +1,4 @@
 """Base entity for GMP HA sensors."""
-
 from __future__ import annotations
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity

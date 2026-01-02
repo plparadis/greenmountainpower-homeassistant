@@ -1,5 +1,4 @@
 """Config flow for the GMP HA integration."""
-
 from __future__ import annotations
 
 import logging
@@ -11,7 +10,6 @@ from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 from oauthlib.oauth2.rfc6749 import errors as oauth_errors
-
 
 from .api import GmpClient
 from .const import CONF_ACCOUNT_NUMBER
