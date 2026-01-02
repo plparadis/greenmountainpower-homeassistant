@@ -114,8 +114,8 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         """Fetch usage data from the API."""
 
         end = dt_util.now()
-        daily_start = end - timedelta(days=7)
         monthly_start = end - timedelta(days=62)
+        daily_start = monthly_start
 
         try:
             if not self._usage_history:
@@ -169,6 +169,18 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         previous_month = _previous_month(end)
         current_month_kwh = _find_monthly_value(monthly_usage, current_month)
         previous_month_kwh = _find_monthly_value(monthly_usage, previous_month)
+        month_start = dt_util.as_local(end).date().replace(day=1)
+        previous_month_start = month_start.replace(day=1) - timedelta(days=1)
+        previous_month_start = previous_month_start.replace(day=1)
+        month_to_date_kwh = _sum_usage_between(
+            daily_usage, month_start, dt_util.as_local(end).date()
+        )
+        previous_month_to_date_kwh = _sum_usage_between(
+            daily_usage,
+            previous_month_start,
+            _month_to_date_end(previous_month_start, end.day),
+        )
+        month_to_date_trend = _trend(month_to_date_kwh, previous_month_to_date_kwh)
         estimated_cost = (
             round(current_month_kwh * self.price_per_kwh, 2)
             if current_month_kwh is not None
@@ -199,6 +211,9 @@ class GmpHaCoordinator(DataUpdateCoordinator):
             ),
             "hourly_trend": _round_or_none(hourly_trend),
             "daily_trend": _round_or_none(daily_trend),
+            "month_to_date_kwh": _round_or_none(month_to_date_kwh),
+            "previous_month_to_date_kwh": _round_or_none(previous_month_to_date_kwh),
+            "month_to_date_trend": _round_or_none(month_to_date_trend),
             "current_month_kwh": _round_or_none(current_month_kwh),
             "previous_month_kwh": _round_or_none(previous_month_kwh),
             "previous_bill": previous_bill,
@@ -247,6 +262,28 @@ def _find_monthly_value(usages: list[HourlyUsage], target_month: tuple[int, int]
         if (usage.start_time.year, usage.start_time.month) == target_month:
             return usage.consumed_kwh
     return None
+
+
+def _sum_usage_between(
+    usages: list[HourlyUsage], start_date, end_date
+) -> float | None:
+    if not usages:
+        return None
+
+    total = 0.0
+    for usage in usages:
+        usage_date = dt_util.as_local(dt_util.as_utc(usage.start_time)).date()
+        if start_date <= usage_date <= end_date:
+            total += usage.consumed_kwh
+
+    return total if total > 0 else 0.0
+
+
+def _month_to_date_end(previous_month_start, current_day_of_month):
+    last_day_previous_month = previous_month_start.replace(day=1) + timedelta(days=32)
+    last_day_previous_month = last_day_previous_month.replace(day=1) - timedelta(days=1)
+    days_to_include = min(current_day_of_month, last_day_previous_month.day)
+    return previous_month_start + timedelta(days=days_to_include - 1)
 
 
 def _previous_month(date_time):

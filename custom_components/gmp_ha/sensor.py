@@ -38,6 +38,9 @@ async def async_setup_entry(
             GmpDailyTrendSensor(coordinator, entry.entry_id),
             GmpCurrentMonthEnergySensor(coordinator, entry.entry_id),
             GmpPreviousMonthEnergySensor(coordinator, entry.entry_id),
+            GmpMonthToDateEnergySensor(coordinator, entry.entry_id),
+            GmpPreviousMonthToDateEnergySensor(coordinator, entry.entry_id),
+            GmpMonthToDateTrendSensor(coordinator, entry.entry_id),
             GmpPreviousBillSensor(coordinator, entry.entry_id),
         ]
     )
@@ -219,6 +222,56 @@ class GmpPreviousMonthEnergySensor(GmpHaEntity, SensorEntity):
     @property
     def native_value(self):
         return self.coordinator.data["previous_month_kwh"]
+
+
+class GmpMonthToDateEnergySensor(GmpHaEntity, SensorEntity):
+    """Energy used so far this month."""
+
+    _attr_translation_key = "month_to_date_energy"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="month_to_date_energy")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["month_to_date_kwh"]
+
+
+class GmpPreviousMonthToDateEnergySensor(GmpHaEntity, SensorEntity):
+    """Energy used at the same point last month."""
+
+    _attr_translation_key = "previous_month_to_date_energy"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(
+            coordinator, entry_id, unique_suffix="previous_month_to_date_energy"
+        )
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["previous_month_to_date_kwh"]
+
+
+class GmpMonthToDateTrendSensor(GmpHaEntity, SensorEntity):
+    """Difference between current and prior month-to-date usage."""
+
+    _attr_translation_key = "month_to_date_trend"
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+
+    def __init__(self, coordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id, unique_suffix="month_to_date_trend")
+
+    @property
+    def native_value(self):
+        return self.coordinator.data["month_to_date_trend"]
 
 
 class GmpPreviousBillSensor(GmpHaEntity, SensorEntity):
