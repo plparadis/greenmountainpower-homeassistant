@@ -164,7 +164,6 @@ class GmpHourlyTrendSensor(GmpHaEntity, SensorEntity):
 
     _attr_translation_key = "hourly_trend"
     _attr_device_class = SensorDeviceClass.ENERGY
-    _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
 
     def __init__(self, coordinator, entry_id: str) -> None:
@@ -180,7 +179,6 @@ class GmpDailyTrendSensor(GmpHaEntity, SensorEntity):
 
     _attr_translation_key = "daily_trend"
     _attr_device_class = SensorDeviceClass.ENERGY
-    _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
 
     def __init__(self, coordinator, entry_id: str) -> None:
@@ -262,7 +260,6 @@ class GmpMonthToDateTrendSensor(GmpHaEntity, SensorEntity):
 
     _attr_translation_key = "month_to_date_trend"
     _attr_device_class = SensorDeviceClass.ENERGY
-    _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
 
     def __init__(self, coordinator, entry_id: str) -> None:

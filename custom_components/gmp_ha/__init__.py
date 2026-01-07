@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+from datetime import datetime
 from datetime import timedelta
 
 from greenmountainpower import exceptions as gmp_exceptions
@@ -152,7 +153,12 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         )
         yesterday = today - timedelta(days=1)
         yesterday_kwh = _find_daily_value(daily_usage, yesterday)
-        current_hour_usage, previous_hour_usage = _latest_hours(usages)
+        current_hour_start = dt_util.as_utc(end).replace(
+            minute=0, second=0, microsecond=0
+        )
+        previous_hour_start = current_hour_start - timedelta(hours=1)
+        current_hour_usage = _find_usage_at(usages, current_hour_start)
+        previous_hour_usage = _find_usage_at(usages, previous_hour_start)
         current_hour = (
             current_hour_usage.consumed_kwh if current_hour_usage is not None else None
         )
@@ -239,13 +245,13 @@ def _find_daily_value(usages: list[HourlyUsage], target_date):
     return None
 
 
-def _latest_hours(usages: list[HourlyUsage]):
+def _find_usage_at(
+    usages: list[HourlyUsage], start_time: datetime
+) -> HourlyUsage | None:
     if not usages:
-        return None, None
-    sorted_usages = sorted(usages, key=lambda usage: usage.start_time)
-    current = sorted_usages[-1]
-    previous = sorted_usages[-2] if len(sorted_usages) > 1 else None
-    return current, previous
+        return None
+    usage_by_start = {usage.start_time: usage for usage in usages}
+    return usage_by_start.get(start_time)
 
 
 def _trend(current: float | None, previous: float | None):
