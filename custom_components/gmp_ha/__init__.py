@@ -99,6 +99,7 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         self._backfill_days = backfill_days
         self._usage_history: list[HourlyUsage] = []
         self._refresh_window = timedelta(hours=1)
+        self._total_kwh: float | None = None
 
         now = dt_util.now()
         self._start_time = now - timedelta(days=backfill_days)
@@ -137,14 +138,20 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         except Exception as err:  # noqa: BLE001
             raise UpdateFailed(err) from err
 
-        self._usage_history = _merge_usage(self._usage_history, new_usages)
+        self._usage_history, total_delta = _merge_usage(
+            self._usage_history, new_usages
+        )
         window_start = end - timedelta(days=self._backfill_days)
         self._usage_history = [
             usage for usage in self._usage_history if usage.start_time >= window_start
         ]
 
         usages = self._usage_history
-        total_kwh = sum(usage.consumed_kwh for usage in usages)
+        if self._total_kwh is None:
+            self._total_kwh = sum(usage.consumed_kwh for usage in usages)
+        else:
+            self._total_kwh += total_delta
+        total_kwh = self._total_kwh
         today = dt_util.now().date()
         today_kwh = sum(
             usage.consumed_kwh
@@ -153,12 +160,19 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         )
         yesterday = today - timedelta(days=1)
         yesterday_kwh = _find_daily_value(daily_usage, yesterday)
-        current_hour_start = dt_util.as_utc(end).replace(
-            minute=0, second=0, microsecond=0
+        latest_usage = max(usages, key=lambda usage: usage.start_time, default=None)
+        current_hour_start = latest_usage.start_time if latest_usage else None
+        previous_hour_start = (
+            current_hour_start - timedelta(hours=1)
+            if current_hour_start is not None
+            else None
         )
-        previous_hour_start = current_hour_start - timedelta(hours=1)
-        current_hour_usage = _find_usage_at(usages, current_hour_start)
-        previous_hour_usage = _find_usage_at(usages, previous_hour_start)
+        current_hour_usage = latest_usage
+        previous_hour_usage = (
+            _find_usage_at(usages, previous_hour_start)
+            if previous_hour_start is not None
+            else None
+        )
         current_hour = (
             current_hour_usage.consumed_kwh if current_hour_usage is not None else None
         )
@@ -228,14 +242,21 @@ class GmpHaCoordinator(DataUpdateCoordinator):
 
 def _merge_usage(
     existing: list[HourlyUsage], new_values: list[HourlyUsage]
-) -> list[HourlyUsage]:
+) -> tuple[list[HourlyUsage], float]:
     if not existing:
-        return sorted(new_values, key=lambda usage: usage.start_time)
+        return sorted(new_values, key=lambda usage: usage.start_time), sum(
+            usage.consumed_kwh for usage in new_values
+        )
 
     combined = {usage.start_time: usage for usage in existing}
+    delta = 0.0
     for usage in new_values:
+        if usage.start_time in combined:
+            delta += usage.consumed_kwh - combined[usage.start_time].consumed_kwh
+        else:
+            delta += usage.consumed_kwh
         combined[usage.start_time] = usage
-    return sorted(combined.values(), key=lambda usage: usage.start_time)
+    return sorted(combined.values(), key=lambda usage: usage.start_time), delta
 
 
 def _find_daily_value(usages: list[HourlyUsage], target_date):
