@@ -138,9 +138,7 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         except Exception as err:  # noqa: BLE001
             raise UpdateFailed(err) from err
 
-        self._usage_history, total_delta = _merge_usage(
-            self._usage_history, new_usages
-        )
+        self._usage_history, total_delta = _merge_usage(self._usage_history, new_usages)
         window_start = end - timedelta(days=self._backfill_days)
         self._usage_history = [
             usage for usage in self._usage_history if usage.start_time >= window_start
