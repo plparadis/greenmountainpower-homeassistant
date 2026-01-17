@@ -1,7 +1,7 @@
 # GMP HA Home Assistant Integration
 
 <p align="center">
-  <img src="logo.png" alt="Green Mountain Power in Home Assistant" width="320" />
+  <img src="https://github.com/plparadis/greenmountainpower-homeassistant/blob/dev/logo.png" alt="Green Mountain Power in Home Assistant" width="320" />
 </p>
 
 <p align="center">
