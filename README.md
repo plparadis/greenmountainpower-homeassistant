@@ -48,11 +48,12 @@ This integration focuses on **simplicity and reliability**. It does **not** atte
 
 ## Features
 
-- **Grid energy total** (kWh) — cumulative electricity usage reported by GMP
+- **Grid energy total** (kWh) — cumulative electricity usage reported by GMP (hourly data)
 - **Daily energy usage** (kWh) — total consumption for the current day
 - **Month-to-date comparison** — current month-to-date energy with previous month-to-date and the delta
 - **Estimated bill** (USD) — cost estimate using a configurable price per kWh
 - **Automatic updates** — data is refreshed every 30 minutes by default
+- **Late-hour backfill** — hourly gaps are re-checked for the last 48 hours
 
 ---
 
@@ -93,7 +94,7 @@ Setup is fully UI-based. You will be asked for:
 - **Username** (required)
 - **Password** (required)
 - **Price per kWh** (optional, default `0.0`)
-- **Backfill days** (optional, default `365`)
+- **Backfill days** (optional, default `30`)
 
 You can change optional values later under **Integration Options** without re-entering credentials.
 
@@ -109,11 +110,11 @@ The integration creates the following sensors:
 
 | Sensor                                        | Description                                                        |
 | --------------------------------------------- | ------------------------------------------------------------------ |
-| `sensor.gmp_ha_grid_energy`                   | Total energy drawn from the grid (kWh)                             |
+| `sensor.gmp_ha_grid_energy`                   | Total grid energy (kWh) from GMP hourly history                    |
 | `sensor.gmp_ha_daily_energy`                  | Energy used today (kWh)                                            |
 | `sensor.gmp_ha_yesterday_energy`              | Energy used yesterday (kWh)                                        |
-| `sensor.gmp_ha_current_hour_energy`           | Energy used in the current hour (kWh)                              |
-| `sensor.gmp_ha_previous_hour_energy`          | Energy used in the previous hour (kWh)                             |
+| `sensor.gmp_ha_current_hour_energy`           | Latest hour of energy available from GMP (kWh)                     |
+| `sensor.gmp_ha_previous_hour_energy`          | Previous hour before the latest data point (kWh)                   |
 | `sensor.gmp_ha_hourly_trend`                  | Difference between current and previous hour usage (kWh)           |
 | `sensor.gmp_ha_daily_trend`                   | Difference between today and yesterday usage (kWh)                 |
 | `sensor.gmp_ha_current_month_energy`          | Energy used in the current month (kWh)                             |
@@ -131,6 +132,11 @@ Sensors may expose attributes such as:
 - Account number
 - Billing period
 - Last update timestamp
+- Missing hour count and timestamps (for GMP delays)
+
+### Hourly data availability and missing hours
+
+GMP does not publish live, minute-by-minute energy usage. Hourly usage can arrive in batches (for example, several hours appear at once later in the day). This integration checks for missing hourly values and automatically refetches the last 48 hours to backfill gaps. The `sensor.gmp_ha_grid_energy` attributes include the missing hours window and any hours still missing so you can verify whether GMP has published data yet.
 
 ---
 
@@ -143,7 +149,7 @@ To use this integration in the **Energy** dashboard:
 3. Select `sensor.gmp_ha_grid_energy`.
 4. Set the unit to **kWh** if prompted.
 
-Daily energy values will automatically populate historical views once data is available.
+**What to expect:** the Energy dashboard uses the **cumulative grid energy total** reported by GMP. It may lag behind live usage, but it will catch up as GMP publishes hourly history. The latest-hour sensors represent the most recent hour reported by GMP, not necessarily the current clock hour.
 
 ---
 

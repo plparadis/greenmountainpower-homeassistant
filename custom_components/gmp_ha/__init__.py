@@ -25,6 +25,8 @@ from .const import CONF_USERNAME
 from .const import DEFAULT_BACKFILL_DAYS
 from .const import DEFAULT_PRICE_PER_KWH
 from .const import DOMAIN
+from .const import HOURLY_AVAILABILITY_DELAY_HOURS
+from .const import HOURLY_LOOKBACK_HOURS
 from .const import NAME
 from .const import PLATFORMS
 from .const import SCAN_INTERVAL
@@ -99,9 +101,11 @@ class GmpHaCoordinator(DataUpdateCoordinator):
         self._backfill_days = backfill_days
         self._usage_history: list[HourlyUsage] = []
         self._refresh_window = timedelta(hours=1)
+        self._lookback_window = timedelta(hours=HOURLY_LOOKBACK_HOURS)
+        self._availability_delay = timedelta(hours=HOURLY_AVAILABILITY_DELAY_HOURS)
         self._total_kwh: float | None = None
 
-        now = dt_util.now()
+        now = dt_util.as_utc(dt_util.now())
         self._start_time = now - timedelta(days=backfill_days)
 
         super().__init__(
@@ -114,13 +118,23 @@ class GmpHaCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Fetch usage data from the API."""
 
-        end = dt_util.now()
+        end = dt_util.as_utc(dt_util.now())
         monthly_start = end - timedelta(days=62)
         daily_start = monthly_start
+        window_start = end - timedelta(days=self._backfill_days)
+        missing_window_end = _floor_hour(end - self._availability_delay)
+        missing_window_start = max(
+            window_start, missing_window_end - self._lookback_window
+        )
+        missing_hours = _find_missing_hours(
+            self._usage_history, missing_window_start, missing_window_end
+        )
 
         try:
             if not self._usage_history:
                 hourly_start = self._start_time
+            elif missing_hours:
+                hourly_start = missing_hours[0]
             else:
                 hourly_start = end - self._refresh_window
 
@@ -139,10 +153,12 @@ class GmpHaCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(err) from err
 
         self._usage_history, total_delta = _merge_usage(self._usage_history, new_usages)
-        window_start = end - timedelta(days=self._backfill_days)
         self._usage_history = [
             usage for usage in self._usage_history if usage.start_time >= window_start
         ]
+        missing_hours = _find_missing_hours(
+            self._usage_history, missing_window_start, missing_window_end
+        )
 
         usages = self._usage_history
         if self._total_kwh is None:
@@ -234,6 +250,20 @@ class GmpHaCoordinator(DataUpdateCoordinator):
             "current_month_kwh": _round_or_none(current_month_kwh),
             "previous_month_kwh": _round_or_none(previous_month_kwh),
             "previous_bill": previous_bill,
+            "missing_hour_count": len(missing_hours),
+            "missing_hours": [
+                dt_util.as_local(hour).isoformat() for hour in missing_hours
+            ],
+            "missing_hours_window_start": (
+                dt_util.as_local(missing_window_start).isoformat()
+                if missing_window_start is not None
+                else None
+            ),
+            "missing_hours_window_end": (
+                dt_util.as_local(missing_window_end).isoformat()
+                if missing_window_end is not None
+                else None
+            ),
             "usages": usages,
         }
 
@@ -318,3 +348,23 @@ def _round_or_none(value: float | None, digits: int = 3):
     if value is None:
         return None
     return round(value, digits)
+
+
+def _floor_hour(value: datetime) -> datetime:
+    return value.replace(minute=0, second=0, microsecond=0)
+
+
+def _find_missing_hours(
+    usages: list[HourlyUsage], start_time: datetime, end_time: datetime
+) -> list[datetime]:
+    if start_time >= end_time:
+        return []
+
+    usage_by_start = {usage.start_time: usage for usage in usages}
+    missing: list[datetime] = []
+    current = start_time
+    while current < end_time:
+        if current not in usage_by_start:
+            missing.append(current)
+        current += timedelta(hours=1)
+    return missing

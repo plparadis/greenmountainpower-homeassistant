@@ -36,10 +36,10 @@
   "entity": {
     "sensor": {
       "grid_energy": {
-        "name": "Grid energy"
+        "name": "Grid energy total (GMP)"
       },
       "daily_energy": {
-        "name": "Daily energy"
+        "name": "Today energy"
       },
       "estimated_bill": {
         "name": "Estimated bill"
@@ -48,7 +48,7 @@
         "name": "Yesterday energy"
       },
       "current_hour_energy": {
-        "name": "Current hour energy"
+        "name": "Latest hour energy"
       },
       "previous_hour_energy": {
         "name": "Previous hour energy"
