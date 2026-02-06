@@ -60,6 +60,19 @@ class GmpGridEnergySensor(GmpHaEntity, SensorEntity):
     def native_value(self):
         return self.coordinator.data["total_kwh"]
 
+    @property
+    def extra_state_attributes(self):
+        return {
+            "missing_hour_count": self.coordinator.data["missing_hour_count"],
+            "missing_hours": self.coordinator.data["missing_hours"],
+            "missing_hours_window_start": self.coordinator.data[
+                "missing_hours_window_start"
+            ],
+            "missing_hours_window_end": self.coordinator.data[
+                "missing_hours_window_end"
+            ],
+        }
+
 
 class GmpDailyEnergySensor(GmpHaEntity, SensorEntity):
     """Energy used today."""

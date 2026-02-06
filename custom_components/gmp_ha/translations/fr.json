@@ -36,10 +36,10 @@
   "entity": {
     "sensor": {
       "grid_energy": {
-        "name": "Énergie du réseau"
+        "name": "Énergie totale du réseau (GMP)"
       },
       "daily_energy": {
-        "name": "Énergie quotidienne"
+        "name": "Énergie du jour"
       },
       "estimated_bill": {
         "name": "Facture estimée"

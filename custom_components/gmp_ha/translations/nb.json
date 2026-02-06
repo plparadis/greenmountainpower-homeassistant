@@ -36,10 +36,10 @@
   "entity": {
     "sensor": {
       "grid_energy": {
-        "name": "Strømnettforbruk"
+        "name": "Strømnettforbruk totalt (GMP)"
       },
       "daily_energy": {
-        "name": "Daglig forbruk"
+        "name": "Dagens forbruk"
       },
       "estimated_bill": {
         "name": "Anslått faktura"
